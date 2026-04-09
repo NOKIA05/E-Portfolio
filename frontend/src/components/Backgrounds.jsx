@@ -1,15 +1,20 @@
 import { motion } from 'framer-motion'
 
-const particles = Array.from({ length: 40 }, (_, i) => ({
-    id: i,
-    size: Math.random() * 4 + 3,
-    x: Math.random() * 95 + 1,
-    y: Math.random() * 90 + 1,
-    driftX: (Math.random() - 0.5) * 120,
-    driftY: (Math.random() - 0.5) * 120,
-    duration: Math.random() * 6 + 6,
-    delay: Math.random() * 5,
-}))
+// 8 columns x 5 rows = 40 cells, one particle per cell with random jitter
+const particles = Array.from({ length: 40 }, (_, i) => {
+    const col = i % 8
+    const row = Math.floor(i / 8)
+    return {
+        id: i,
+        size: Math.random() * 4 + 3,
+        x: (col / 8) * 95 + Math.random() * 10 + 1,
+        y: (row / 5) * 90 + Math.random() * 14 + 1,
+        driftX: (Math.random() - 0.5) * 100,
+        driftY: (Math.random() - 0.5) * 100,
+        duration: Math.random() * 6 + 6,
+        delay: Math.random() * 5,
+    }
+})
 
 function Particle({ p }) {
     return (
