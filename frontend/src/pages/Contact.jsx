@@ -1,6 +1,6 @@
 // Contact.jsx — the contact form page. Submits to the Flask backend which emails you via SendGrid.
 // The form is rate limited to 3 submissions per minute per IP (set in backend/app/routes/contact.py).
-// After deployment: replace http://127.0.0.1:5000 with your Render backend URL
+// After deployment: replace https://e-portfolio-l09x.onrender.com with your Render backend URL
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
@@ -31,7 +31,7 @@ function Contact() {
         e.preventDefault()
         setStatus('Sending...')
 
-        fetch('http://127.0.0.1:5000/api/contact', {
+        fetch('https://e-portfolio-l09x.onrender.com/api/contact', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(form)

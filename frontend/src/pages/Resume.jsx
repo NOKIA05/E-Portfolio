@@ -4,7 +4,7 @@
 //   resume.pdf          → the downloadable PDF
 //   resume-preview-1.png → page 1 of your resume as an image
 //   resume-preview-2.png → page 2 of your resume as an image
-// After deployment: replace http://127.0.0.1:5000 with your Render backend URL
+// After deployment: replace https://e-portfolio-l09x.onrender.com with your Render backend URL
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
@@ -29,7 +29,7 @@ function Resume() {
                 download_name is set in the backend route so it saves as Abd-alrhman_Odeh_resume.pdf */}
             <div className="fixed top-6 right-8 z-20">
                 <a
-                    href="http://127.0.0.1:5000/api/resume"
+                    href="https://e-portfolio-l09x.onrender.com/api/resume"
                     download
                     className="text-2xl font-bold tracking-widest inline-block"
                     style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,215,0,0.6)', textDecoration: 'none' }}
@@ -77,7 +77,7 @@ function Resume() {
                                     }}
                                 >
                                     <img
-                                        src={`http://127.0.0.1:5000/api/resume/preview/${n}`}
+                                        src={`https://e-portfolio-l09x.onrender.com/api/resume/preview/${n}`}
                                         alt={`Resume page ${n}`}
                                         style={{ width: '100%', display: 'block' }}
                                     />

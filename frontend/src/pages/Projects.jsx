@@ -1,7 +1,7 @@
 // Projects.jsx — fetches projects from the Flask API and displays them as glass cards.
 // To add a project: use psql → INSERT INTO projects (title, description) VALUES ('...', '...');
 // To remove a project: use psql → DELETE FROM projects WHERE id = <id>;
-// After deployment: replace http://127.0.0.1:5000 with your Render backend URL
+// After deployment: replace https://e-portfolio-l09x.onrender.com with your Render backend URL
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
@@ -16,7 +16,7 @@ function Projects() {
 
     // Fetches all projects from the backend on page load
     useEffect(() => {
-        fetch('http://127.0.0.1:5000/api/projects')
+        fetch('https://e-portfolio-l09x.onrender.com/api/projects')
             .then(res => res.json())
             .then(data => setProjects(data))
     }, [])

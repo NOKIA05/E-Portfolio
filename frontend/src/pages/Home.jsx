@@ -13,7 +13,7 @@ const menuItems = [
     { label: 'Projects', path: '/projects', rotate: 4},
     { label: 'About', path: '/about', rotate: -4},
     { label: 'Contact', path: '/contact', rotate: 6},
-    { label: 'Resume', path: 'http://127.0.0.1:5000/api/resume', external: true, rotate: -3},
+    { label: 'Resume', path: 'https://e-portfolio-l09x.onrender.com/api/resume', external: true, rotate: -3},
 ]
 
 // MenuItem — a glass card style nav item (not currently used in the main layout)
