@@ -15,8 +15,8 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 
-    # CORS: only allows requests from the frontend URL (localhost in dev, Vercel URL in prod)
-    CORS(app, origins=[os.getenv('FRONTEND_URL', 'http://localhost:5173')])
+    # CORS: allows requests from local dev and the production Vercel URL
+    CORS(app, origins=['http://localhost:5173', 'https://e-portfolio-henna-beta.vercel.app'])
     db.init_app(app)
     limiter.init_app(app)
 
