@@ -114,6 +114,8 @@ return (
     <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden flex flex-col items-center justify-center">
     <Background />
 
+    <div className="relative z-10 flex flex-col items-center w-full">
+
     {/* Top nav — add more NavLinks here to grow the navigation */}
     <div className="flex gap-32 mb-8">
         <NavLink to="/projects" delay={0}>Projects</NavLink>
@@ -204,6 +206,7 @@ return (
         <NavLink to="/resume" delay={0.75}>Resume</NavLink>
     </div>
 
+    </div>
     </div>
 )
 }
