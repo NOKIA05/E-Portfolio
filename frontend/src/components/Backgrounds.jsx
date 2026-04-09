@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 
 // Each shape: type, size (px), x/y position (% from top-left), duration (base speed), delay (seconds before popping in)
@@ -27,10 +28,12 @@ function Shape({ shape }) {
         filter: `drop-shadow(0 0 8px ${glowColor}) drop-shadow(0 0 20px ${glowColorDim})`,
     }
 
-    // Random movement paths — recalculated every page load so shapes never repeat
+    // Random movement paths — generated once per shape mount so they don't change on re-renders
     const rand = (min, max) => Math.random() * (max - min) + min
-    const yPath = [0, rand(-80, -40), rand(20, 60), rand(-60, -20), rand(30, 70), 0]
-    const xPath = [0, rand(40, 100), rand(-100, -40), rand(60, 120), rand(-80, -30), 0]
+    const { yPath, xPath } = useMemo(() => ({
+        yPath: [0, rand(-80, -40), rand(20, 60), rand(-60, -20), rand(30, 70), 0],
+        xPath: [0, rand(40, 100), rand(-100, -40), rand(60, 120), rand(-80, -30), 0],
+    }), [])
 
     // floatAnimation: moves the shape around the x/y axes and spins it in 3D
     const floatAnimation = {
