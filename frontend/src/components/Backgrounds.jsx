@@ -1,3 +1,46 @@
+import { motion } from 'framer-motion'
+
+const particles = Array.from({ length: 40 }, (_, i) => ({
+    id: i,
+    size: Math.random() * 4 + 3,
+    x: Math.random() * 95 + 1,
+    y: Math.random() * 90 + 1,
+    driftX: (Math.random() - 0.5) * 120,
+    driftY: (Math.random() - 0.5) * 120,
+    duration: Math.random() * 6 + 6,
+    delay: Math.random() * 5,
+}))
+
+function Particle({ p }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, x: 0, y: 0 }}
+            animate={{
+                opacity: [0, 0.85, 0.5, 0.85, 0],
+                x: [0, p.driftX * 0.5, p.driftX, p.driftX * 0.5, 0],
+                y: [0, p.driftY * 0.5, p.driftY, p.driftY * 0.5, 0],
+            }}
+            transition={{
+                duration: p.duration,
+                delay: p.delay,
+                repeat: Infinity,
+                ease: 'easeInOut',
+            }}
+            style={{
+                position: 'absolute',
+                left: `${p.x}%`,
+                top: `${p.y}%`,
+                width: p.size,
+                height: p.size,
+                borderRadius: '50%',
+                background: 'white',
+                boxShadow: '0 0 8px 2px rgba(255,255,255,0.8), 0 0 16px rgba(255,255,255,0.4)',
+                pointerEvents: 'none',
+            }}
+        />
+    )
+}
+
 export default function Background() {
     return (
         <div style={{
@@ -6,21 +49,8 @@ export default function Background() {
             pointerEvents: 'none',
             zIndex: 1,
         }}>
-            {Array.from({ length: 40 }).map((_, i) => (
-                <div
-                    key={i}
-                    style={{
-                        position: 'absolute',
-                        left: `${(i * 2.5) % 96 + 2}%`,
-                        top: `${(i * 7.3) % 90 + 2}%`,
-                        width: 6,
-                        height: 6,
-                        borderRadius: '50%',
-                        background: 'white',
-                        opacity: 0.8,
-                        boxShadow: '0 0 8px 2px rgba(255,255,255,0.9)',
-                    }}
-                />
+            {particles.map(p => (
+                <Particle key={p.id} p={p} />
             ))}
         </div>
     )
