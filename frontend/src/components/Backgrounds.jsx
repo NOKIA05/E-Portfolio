@@ -91,8 +91,7 @@ function Bubble({ bubble }) {
                     ? `0 0 30px ${hoverColor}, inset 0 0 20px rgba(255,255,255,0.15)`
                     : '0 0 16px rgba(255,255,255,0.15), inset 0 0 16px rgba(255,255,255,0.1)',
                 transition: 'background 0.3s ease, box-shadow 0.3s ease, border 0.3s ease',
-                pointerEvents: 'auto',
-                cursor: 'default',
+                pointerEvents: 'none',
             }}
         />
     )
@@ -136,8 +135,7 @@ function Particle({ particle }) {
                     ? '0 0 16px rgba(255,255,255,1), 0 0 32px rgba(255,255,255,0.8)'
                     : '0 0 8px rgba(255,255,255,0.7), 0 0 16px rgba(255,255,255,0.3)',
                 transition: 'box-shadow 0.2s ease',
-                pointerEvents: 'auto',
-                cursor: 'default',
+                pointerEvents: 'none',
             }}
         />
     )
@@ -151,6 +149,7 @@ export default function Background() {
             overflow: 'hidden',
             pointerEvents: 'none',
             perspective: '800px',
+            zIndex: 0,
         }}>
             {bubbles.map(bubble => (
                 <Bubble key={bubble.id} bubble={bubble} />
