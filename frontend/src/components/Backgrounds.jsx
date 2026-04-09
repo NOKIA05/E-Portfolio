@@ -35,33 +35,25 @@ function Shape({ shape }) {
         xPath: [0, rand(40, 100), rand(-100, -40), rand(60, 120), rand(-80, -30), 0],
     }), [])
 
-    // floatAnimation: moves the shape around the x/y axes and spins it in 3D
-    const floatAnimation = {
-        opacity: 1,
+    // Combined animation — each property has its own transition to avoid conflicts
+    const animate = {
+        scale: [0, 1.2, 1, 1, 1, 0.8, 0],
+        opacity: [0, 1, 1, 1, 1, 0.5, 0],
         y: yPath,
         x: xPath,
         rotateX: [0, 180, 360],
         rotateY: [0, 180, 360],
         rotateZ: [0, 180, 360],
-        transition: {
-            y: { duration: shape.duration * 3, repeat: Infinity, ease: 'easeInOut'},
-            x: { duration: shape.duration * 3.5, repeat: Infinity, ease: 'easeInOut'},
-            rotateX: { duration: shape.duration * 2, repeat: Infinity, ease: 'linear'},
-            rotateY: { duration: shape.duration * 2.5, repeat: Infinity, ease: 'linear'},
-            rotateZ: { duration: shape.duration * 3, repeat: Infinity, ease: 'linear'},
-        }
     }
 
-    // popAnimation: makes shapes scale in from nothing, stay visible, then disappear — loops forever
-    const popAnimation = {
-        scale: [0, 1.2, 1, 1, 1, 0.8, 0],
-        opacity: [0, 1, 1, 1, 1, 0.5, 0],
-        transition: {
-            duration: shape.duration * 2,
-            repeat: Infinity,
-            delay: shape.delay,
-            ease: 'easeInOut',
-        }
+    const transition = {
+        scale: { duration: shape.duration * 2, repeat: Infinity, delay: shape.delay, ease: 'easeInOut' },
+        opacity: { duration: shape.duration * 2, repeat: Infinity, delay: shape.delay, ease: 'easeInOut' },
+        y: { duration: shape.duration * 3, repeat: Infinity, ease: 'easeInOut' },
+        x: { duration: shape.duration * 3.5, repeat: Infinity, ease: 'easeInOut' },
+        rotateX: { duration: shape.duration * 2, repeat: Infinity, ease: 'linear' },
+        rotateY: { duration: shape.duration * 2.5, repeat: Infinity, ease: 'linear' },
+        rotateZ: { duration: shape.duration * 3, repeat: Infinity, ease: 'linear' },
     }
 
     if (shape.type === 'circle') {
@@ -75,7 +67,7 @@ function Shape({ shape }) {
                     border: '2px solid rgba(255, 215, 0, 0.6)',
                     boxShadow: '0 0 12px rgba(255, 215, 0, 0.4), inset 0 0 12px rgba(255, 215, 0, 0.1)',
                 }}
-                animate={{ ...floatAnimation, ...popAnimation }}
+                animate={animate} transition={transition}
                 initial={{ opacity: 0, scale: 0 }}
             />
         )
@@ -92,7 +84,7 @@ function Shape({ shape }) {
                     boxShadow: '0 0 12px rgba(220, 38, 38, 0.4)',
                     transform: 'rotate(45deg)',
                 }}
-                animate={{ ...floatAnimation, ...popAnimation }}
+                animate={animate} transition={transition}
                 initial={{ opacity: 0, scale: 0 }}
             />
         )
@@ -108,7 +100,7 @@ function Shape({ shape }) {
                     border: '2px solid rgba(255, 255, 255, 0.6)',
                     boxShadow: '0 0 12px rgba(255, 255, 255, 0.4), inset 0 0 12px rgba(255, 255, 255, 0.1)',
                 }}
-                animate={{ ...floatAnimation, ...popAnimation }}
+                animate={animate} transition={transition}
                 initial={{ opacity: 0, scale: 0 }}
             />
         )
@@ -127,7 +119,7 @@ function Shape({ shape }) {
                     boxShadow: `0 0 16px rgba(255,215,0,0.5)`,
                     backdropFilter: 'blur(2px)',
                 }}
-                animate={{ ...floatAnimation, ...popAnimation }}
+                animate={animate} transition={transition}
                 initial={{ opacity: 0, scale: 0 }}
             />
         )
@@ -144,7 +136,7 @@ function Shape({ shape }) {
                     border: `${shape.size * 0.1}px solid rgba(220, 38, 38, 0.6)`,
                     boxShadow: '0 0 16px rgba(220,38,38,0.5), inset 0 0 16px rgba(220,38,38,0.2)',
                 }}
-                animate={{ ...floatAnimation, ...popAnimation }}
+                animate={animate} transition={transition}
                 initial={{ opacity: 0, scale: 0 }}
             />
         )
@@ -161,7 +153,7 @@ function Shape({ shape }) {
                     clipPath: 'polygon(35% 0%, 65% 0%, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0% 65%, 0% 35%, 35% 35%)',
                     boxShadow: '0 0 12px rgba(255,255,255,0.5)',
                 }}
-                animate={{ ...floatAnimation, ...popAnimation }}
+                animate={animate} transition={transition}
                 initial={{ opacity: 0, scale: 0 }}
             />
         )
@@ -179,7 +171,7 @@ function Shape({ shape }) {
                     borderBottom: `${shape.size}px solid rgba(255, 215, 0, 0.3)`,
                     filter: 'drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 215, 0, 0.4))',
                 }}
-                animate={{ ...floatAnimation, ...popAnimation }}
+                animate={animate} transition={transition}
                 initial={{ opacity: 0, scale: 0 }}
             />
         )
