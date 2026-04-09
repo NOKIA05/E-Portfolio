@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 
-// Large glass bubbles — floating slow and big
+// Large glass bubbles
 const bubbles = [
     { id: 1,  size: 80,  x: '5%',  y: '10%', duration: 8,  delay: 0   },
     { id: 2,  size: 50,  x: '90%', y: '5%',  duration: 6,  delay: 0.2 },
@@ -18,12 +18,22 @@ const bubbles = [
     { id: 13, size: 55,  x: '70%', y: '40%', duration: 11, delay: 0.7 },
     { id: 14, size: 85,  x: '35%', y: '55%', duration: 9,  delay: 0.3 },
     { id: 15, size: 45,  x: '15%', y: '45%', duration: 7,  delay: 0.5 },
+    { id: 16, size: 95,  x: '55%', y: '25%', duration: 10, delay: 0.2 },
+    { id: 17, size: 60,  x: '78%', y: '60%', duration: 8,  delay: 0.4 },
+    { id: 18, size: 110, x: '40%', y: '75%', duration: 12, delay: 0.1 },
+    { id: 19, size: 50,  x: '10%', y: '90%', duration: 9,  delay: 0.6 },
+    { id: 20, size: 70,  x: '65%', y: '15%', duration: 7,  delay: 0.3 },
+    { id: 21, size: 40,  x: '30%', y: '30%', duration: 11, delay: 0.5 },
+    { id: 22, size: 85,  x: '80%', y: '20%', duration: 9,  delay: 0.2 },
+    { id: 23, size: 55,  x: '50%', y: '50%', duration: 8,  delay: 0.7 },
+    { id: 24, size: 65,  x: '18%', y: '65%', duration: 10, delay: 0.4 },
+    { id: 25, size: 75,  x: '72%', y: '88%', duration: 7,  delay: 0.1 },
 ]
 
-// Small white particles — fast and tiny
-const particles = Array.from({ length: 40 }, (_, i) => ({
+// Small white particles
+const particles = Array.from({ length: 60 }, (_, i) => ({
     id: i,
-    size: Math.random() * 4 + 2,
+    size: Math.random() * 5 + 2,
     x: `${Math.random() * 100}%`,
     y: `${Math.random() * 100}%`,
     duration: Math.random() * 6 + 4,
@@ -31,12 +41,12 @@ const particles = Array.from({ length: 40 }, (_, i) => ({
 }))
 
 const randomHoverColor = () => Math.random() > 0.5
-    ? 'rgba(220, 38, 38, 0.7)'
-    : 'rgba(255, 215, 0, 0.7)'
+    ? 'rgba(220, 38, 38, 0.8)'
+    : 'rgba(255, 215, 0, 0.8)'
 
 function Bubble({ bubble }) {
     const [hovered, setHovered] = useState(false)
-    const [hoverColor, setHoverColor] = useState('rgba(220,38,38,0.6)')
+    const [hoverColor, setHoverColor] = useState('rgba(220,38,38,0.7)')
 
     const rand = (min, max) => Math.random() * (max - min) + min
     const { yPath, xPath } = useMemo(() => ({
@@ -48,7 +58,7 @@ function Bubble({ bubble }) {
         <motion.div
             animate={{
                 scale: [0, 1.1, 1, 1, 1, 0.9, 0],
-                opacity: [0, 1, 1, 1, 1, 0.5, 0],
+                opacity: [0, 1, 1, 1, 1, 0.6, 0],
                 y: yPath,
                 x: xPath,
             }}
@@ -68,13 +78,18 @@ function Bubble({ bubble }) {
                 width: bubble.size,
                 height: bubble.size,
                 borderRadius: '50%',
-                background: hovered ? hoverColor : 'rgba(255,255,255,0.04)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
-                border: hovered ? `1.5px solid ${hoverColor}` : '1.5px solid rgba(255,255,255,0.15)',
+                // Glass look — visible white tint with strong border
+                background: hovered
+                    ? hoverColor
+                    : 'rgba(255,255,255,0.12)',
+                backdropFilter: 'blur(6px)',
+                WebkitBackdropFilter: 'blur(6px)',
+                border: hovered
+                    ? `2px solid ${hoverColor}`
+                    : '2px solid rgba(255,255,255,0.35)',
                 boxShadow: hovered
-                    ? `0 0 30px ${hoverColor}, inset 0 0 16px rgba(255,255,255,0.1)`
-                    : '0 0 10px rgba(255,255,255,0.06), inset 0 0 10px rgba(255,255,255,0.04)',
+                    ? `0 0 30px ${hoverColor}, inset 0 0 20px rgba(255,255,255,0.15)`
+                    : '0 0 16px rgba(255,255,255,0.15), inset 0 0 16px rgba(255,255,255,0.1)',
                 transition: 'background 0.3s ease, box-shadow 0.3s ease, border 0.3s ease',
                 pointerEvents: 'auto',
                 cursor: 'default',
@@ -95,7 +110,7 @@ function Particle({ particle }) {
     return (
         <motion.div
             animate={{
-                opacity: [0, 0.8, 0.8, 0.8, 0.8, 0.3, 0],
+                opacity: [0, 1, 1, 1, 1, 0.4, 0],
                 scale: [0, 1, 1, 1, 1, 0.8, 0],
                 y: yPath,
                 x: xPath,
@@ -116,11 +131,11 @@ function Particle({ particle }) {
                 width: particle.size,
                 height: particle.size,
                 borderRadius: '50%',
-                background: hovered ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0.7)',
+                background: 'rgba(255,255,255,0.9)',
                 boxShadow: hovered
-                    ? '0 0 12px rgba(255,255,255,1), 0 0 24px rgba(255,255,255,0.6)'
-                    : '0 0 6px rgba(255,255,255,0.5)',
-                transition: 'background 0.2s ease, box-shadow 0.2s ease',
+                    ? '0 0 16px rgba(255,255,255,1), 0 0 32px rgba(255,255,255,0.8)'
+                    : '0 0 8px rgba(255,255,255,0.7), 0 0 16px rgba(255,255,255,0.3)',
+                transition: 'box-shadow 0.2s ease',
                 pointerEvents: 'auto',
                 cursor: 'default',
             }}
