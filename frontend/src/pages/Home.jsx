@@ -111,7 +111,7 @@ function Home() {
     }, [])
 
 return (
-    <div className="min-h-screen bg-black relative overflow-hidden flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden flex flex-col items-center justify-center">
     <Background />
 
     {/* Top nav — add more NavLinks here to grow the navigation */}

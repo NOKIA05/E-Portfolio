@@ -27,7 +27,7 @@ function Projects() {
     }, [])
 
     return (
-        <div className="min-h-screen bg-black relative overflow-hidden">
+        <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden">
             <Background />
             <div className="relative z-10 p-12">
                 {/* Back button — same style used on every inner page */}

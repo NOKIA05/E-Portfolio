@@ -22,7 +22,7 @@ function Resume() {
     }, [])
 
     return (
-        <div className="min-h-screen bg-black relative overflow-hidden">
+        <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden">
             <Background />
 
             {/* Download button — fixed to top right, always visible while scrolling.
