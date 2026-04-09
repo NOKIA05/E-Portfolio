@@ -11,7 +11,7 @@ import TypeLine from '../components/TypeLine'
 const skillGroups = [
     {
         label: 'LANGUAGES',
-        skills: ['Python', 'JavaScript', 'HTML', 'CSS'],
+        skills: ['Python', 'JavaScript', 'HTML', 'CSS', 'Ruby', 'SQL'],
     },
     {
         label: 'FRAMEWORKS & LIBRARIES',
