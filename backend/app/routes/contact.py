@@ -6,6 +6,8 @@ import os
 
 contact_bp = Blueprint('contact', __name__)
 
+# POST /api/contact — receives the contact form submission and emails it to you via SendGrid
+# Rate limited to 3 requests per minute per IP to prevent spam
 @contact_bp.route('/api/contact', methods=['POST'])
 @limiter.limit("3 per minute")
 def send_message():
@@ -14,14 +16,19 @@ def send_message():
     email = data.get('email', '').strip()
     message = data.get('message', '').strip()
 
+    # Server-side validation — never trust the frontend alone
     if not name or not email or not message:
         return jsonify({'error': 'All fields are required.'}), 400
-    
+
     if len(message) > 2000:
         return jsonify({'error': 'Message is too long.'}), 400
-    
+
     if '@' not in email:
         return jsonify({'error': 'Invalid email address.'}), 400
+
+    # Builds and sends the email using SendGrid
+    # SENDGRID_FROM_EMAIL = the verified sender email in your SendGrid account
+    # MY_EMAIL = where you want to receive the messages
     msg = Mail(
         from_email=os.getenv('SENDGRID_FROM_EMAIL'),
         to_emails=os.getenv('MY_EMAIL'),

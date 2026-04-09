@@ -1,1 +1,10 @@
+/* index.css — global styles applied to the entire app */
+
+/* Loads Tailwind CSS — all utility classes like text-white, flex, p-12 come from here */
 @import "tailwindcss";
+
+/* Sets the font for every element on every page.
+   To change the font: update the Google Fonts link in index.html AND change it here */
+* {
+    font-family: 'Exo 2', sans-serif;
+}
