@@ -81,41 +81,36 @@ function NavLink({ to, children, delay }) {
             onHoverEnd={() => setHovered(false)}
             style={{ position: 'relative', display: 'inline-block' }}
         >
-            {/* Grunge brushstroke background */}
+            {/* Ink brushstroke — fixed width so all 5 links match */}
             <svg
                 style={{
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '135%',
-                    height: '340%',
+                    width: '360px',
+                    height: '58px',
                     pointerEvents: 'none',
                     overflow: 'visible',
-                    transition: 'opacity 0.25s ease',
-                    opacity: hovered ? 1 : 0.35,
+                    opacity: hovered ? 0.95 : 0.72,
+                    transition: 'opacity 0.2s ease',
                 }}
-                viewBox="0 0 400 100"
+                viewBox="0 0 360 52"
                 preserveAspectRatio="none"
             >
-                <defs>
-                    <filter id="grunge" x="-10%" y="-30%" width="120%" height="160%">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.065 0.08" numOctaves="4" seed="8" result="noise"/>
-                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G"/>
-                    </filter>
-                </defs>
-                {/* Base thick stroke — rough outer shape */}
                 <path
-                    d="M6,52 C4,34 18,16 40,18 C56,19 68,13 86,16 C106,19 122,12 142,14 C162,16 180,10 200,12 C220,14 238,9 258,12 C276,15 292,10 310,14 C326,18 340,14 355,20 C368,26 374,36 372,50 C370,62 360,70 344,68 C328,66 312,72 294,70 C276,68 258,73 240,71 C222,69 204,73 186,71 C168,69 150,73 132,71 C114,69 96,73 78,71 C60,69 42,72 26,66 C12,60 6,62 6,52 Z"
-                    fill="white"
-                    filter="url(#grunge)"
-                />
-                {/* Thinner inner stroke for layered paint look */}
-                <path
-                    d="M18,50 C16,38 28,24 50,26 C70,28 90,22 112,24 C134,26 154,20 176,22 C198,24 218,19 238,22 C256,25 272,21 288,24 C302,27 314,24 326,30 C336,36 338,46 334,54 C330,62 318,66 302,64 C284,62 264,66 244,64 C224,62 204,66 184,64 C164,62 144,66 124,64 C104,62 84,66 64,64 C48,62 30,64 20,58 C14,54 16,54 18,50 Z"
-                    fill="white"
-                    opacity="0.5"
-                    filter="url(#grunge)"
+                    d="M3,26
+                    L6,14 L13,20 L21,12 L29,19 L37,13 L45,20 L53,12 L61,19 L69,13 L77,20
+                    L85,12 L93,19 L101,13 L109,20 L117,12 L125,19 L133,13 L141,20 L149,12 L157,19
+                    L165,14 L173,20 L181,12 L189,19 L197,13 L205,20 L213,12 L221,19 L229,14 L237,20
+                    L245,12 L253,19 L261,13 L269,20 L277,12 L285,19 L293,14 L301,20 L309,13 L317,19
+                    L325,14 L333,20 L340,16 L348,21 L355,24 L357,26
+                    L354,38 L347,33 L339,40 L331,34 L323,40 L315,34 L307,40 L299,34 L291,40 L283,34
+                    L275,40 L267,34 L259,40 L251,34 L243,40 L235,34 L227,40 L219,34 L211,40 L203,34
+                    L195,40 L187,34 L179,40 L171,34 L163,40 L155,34 L147,40 L139,34 L131,40 L123,34
+                    L115,40 L107,34 L99,40 L91,34 L83,40 L75,34 L67,40 L59,34 L51,40 L43,34
+                    L35,40 L27,34 L19,39 L11,34 L5,38 L3,26 Z"
+                    fill="rgba(48, 48, 48, 0.88)"
                 />
             </svg>
 
@@ -125,8 +120,8 @@ function NavLink({ to, children, delay }) {
                 style={{
                     position: 'relative',
                     zIndex: 1,
-                    color: hovered ? '#0a0a0a' : 'rgba(255,255,255,0.7)',
-                    textShadow: hovered ? 'none' : '0 0 10px rgba(255,255,255,0.3)',
+                    color: hovered ? '#ffffff' : 'rgba(255,255,255,0.7)',
+                    textShadow: hovered ? '0 0 12px rgba(255,255,255,0.6)' : '0 0 10px rgba(255,255,255,0.3)',
                     transition: 'all 0.2s ease',
                     display: 'inline-block',
                     transform: hovered ? 'scale(1.08)' : 'scale(1)',
