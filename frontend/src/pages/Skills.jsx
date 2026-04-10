@@ -50,18 +50,18 @@ function Skills() {
                     <Link
                         to="/"
                         className="text-2xl font-bold tracking-widest mb-12 inline-block"
-                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,215,0,0.6)' }}
+                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,255,255,0.5)' }}
                     >
                         ← Back
                     </Link>
 
                     <h1
                         className="text-6xl font-black text-white tracking-widest italic mb-12"
-                        style={{ textShadow: '0 0 20px rgba(255,215,0,0.8)' }}
+                        style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
                     >
                         <TypeLine text="Skills" onDone={() => setTitleDone(true)} />
                         {!titleDone && (
-                            <span style={{ color: 'rgba(255,215,0,0.9)' }}>{showCursor ? '|' : ''}</span>
+                            <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
                         )}
                     </h1>
 
@@ -75,9 +75,9 @@ function Skills() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.4, delay: index * 0.12 }}
                                     style={{
-                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,215,0,0.06) 100%)',
+                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.05) 100%)',
                                         backdropFilter: 'blur(12px)',
-                                        border: '1px solid rgba(255,215,0,0.2)',
+                                        border: '1px solid rgba(255,255,255,0.15)',
                                         borderRadius: '12px',
                                         padding: '28px 32px',
                                     }}
@@ -97,8 +97,8 @@ function Skills() {
                                                 key={skill}
                                                 className="text-sm font-bold tracking-widest"
                                                 style={{
-                                                    background: 'rgba(255,215,0,0.08)',
-                                                    border: '1px solid rgba(255,215,0,0.3)',
+                                                    background: 'rgba(255,255,255,0.06)',
+                                                    border: '1px solid rgba(255,255,255,0.25)',
                                                     borderRadius: '6px',
                                                     padding: '6px 16px',
                                                     color: 'rgba(255,255,255,0.85)',

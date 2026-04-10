@@ -43,18 +43,18 @@ function About() {
                     <Link
                         to="/"
                         className="text-2xl font-bold tracking-widest mb-12 inline-block"
-                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,215,0,0.6)' }}
+                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,255,255,0.5)' }}
                     >
                         ← Back
                     </Link>
 
                     <h1
                         className="text-6xl font-black text-white tracking-widest italic mb-12"
-                        style={{ textShadow: '0 0 20px rgba(255,215,0,0.8)' }}
+                        style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
                     >
                         <TypeLine text="About" onDone={() => setTitleDone(true)} />
                         {!titleDone && (
-                            <span style={{ color: 'rgba(255,215,0,0.9)' }}>{showCursor ? '|' : ''}</span>
+                            <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
                         )}
                     </h1>
 
@@ -68,9 +68,9 @@ function About() {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.4, delay: index * 0.15 }}
                                     style={{
-                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,215,0,0.06) 100%)',
+                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.05) 100%)',
                                         backdropFilter: 'blur(12px)',
-                                        border: '1px solid rgba(255,215,0,0.2)',
+                                        border: '1px solid rgba(255,255,255,0.15)',
                                         borderRadius: '12px',
                                         padding: '28px 32px',
                                     }}
@@ -100,16 +100,16 @@ function About() {
                                     variants={{
                                         hidden: { opacity: 0, y: 20 },
                                         visible: { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.45 } },
-                                        hover: { scale: 1.03, boxShadow: '0 0 24px rgba(255,215,0,0.2)', transition: { duration: 0.15 } },
+                                        hover: { scale: 1.03, boxShadow: '0 0 24px rgba(255,255,255,0.15)', transition: { duration: 0.15 } },
                                     }}
                                     initial="hidden"
                                     animate="visible"
                                     whileHover="hover"
                                     className="flex items-center gap-4 flex-1"
                                     style={{
-                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,215,0,0.06) 100%)',
+                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.05) 100%)',
                                         backdropFilter: 'blur(12px)',
-                                        border: '1px solid rgba(255,215,0,0.2)',
+                                        border: '1px solid rgba(255,255,255,0.15)',
                                         borderRadius: '12px',
                                         padding: '24px 28px',
                                         textDecoration: 'none',
@@ -137,9 +137,9 @@ function About() {
                                     whileHover="hover"
                                     className="flex items-center gap-4 flex-1"
                                     style={{
-                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,215,0,0.06) 100%)',
+                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.05) 100%)',
                                         backdropFilter: 'blur(12px)',
-                                        border: '1px solid rgba(255,215,0,0.2)',
+                                        border: '1px solid rgba(255,255,255,0.15)',
                                         borderRadius: '12px',
                                         padding: '24px 28px',
                                         textDecoration: 'none',

@@ -52,18 +52,18 @@ function Contact() {
                     <Link
                         to="/"
                         className="text-2xl font-bold tracking-widest mb-12 inline-block"
-                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,215,0,0.6)' }}
+                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,255,255,0.5)' }}
                     >
                         ← Back
                     </Link>
 
                     <h1
                         className="text-6xl font-black text-white tracking-widest italic mb-12"
-                        style={{ textShadow: '0 0 20px rgba(255,215,0,0.8)' }}
+                        style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
                     >
                         <TypeLine text="Contact" onDone={() => setTitleDone(true)} />
                         {!titleDone && (
-                            <span style={{ color: 'rgba(255,215,0,0.9)' }}>{showCursor ? '|' : ''}</span>
+                            <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
                         )}
                     </h1>
 
@@ -84,7 +84,7 @@ function Contact() {
                                 className="p-4 rounded-lg text-white text-xl tracking-widest"
                                 style={{
                                     background: 'rgba(255,255,255,0.08)',
-                                    border: '1px solid rgba(255,215,0,0.3)',
+                                    border: '1px solid rgba(255,255,255,0.25)',
                                     backdropFilter: 'blur(12px)',
                                     outline: 'none',
                                 }}
@@ -97,7 +97,7 @@ function Contact() {
                                 className="p-4 rounded-lg text-white text-xl tracking-widest"
                                 style={{
                                     background: 'rgba(255,255,255,0.08)',
-                                    border: '1px solid rgba(255,215,0,0.3)',
+                                    border: '1px solid rgba(255,255,255,0.25)',
                                     backdropFilter: 'blur(12px)',
                                     outline: 'none',
                                 }}
@@ -110,7 +110,7 @@ function Contact() {
                                 className="p-4 rounded-lg text-white text-xl tracking-widest h-40"
                                 style={{
                                     background: 'rgba(255,255,255,0.08)',
-                                    border: '1px solid rgba(255,215,0,0.3)',
+                                    border: '1px solid rgba(255,255,255,0.25)',
                                     backdropFilter: 'blur(12px)',
                                     outline: 'none',
                                 }}
@@ -120,7 +120,7 @@ function Contact() {
                                 type="submit"
                                 className="p-4 rounded-lg text-xl font-black tracking-widest"
                                 style={{
-                                    background: 'linear-gradient(135deg, rgba(220,38,38,0.8), rgba(255,215,0,0.8))',
+                                    background: 'rgba(255,255,255,0.9)',
                                     color: '#000',
                                     textShadow: 'none',
                                 }}
@@ -130,7 +130,7 @@ function Contact() {
                             {/* Shows submission status below the button */}
                             {status && (
                                 <p className="text-xl tracking-widest text-center"
-                                    style={{ color: 'rgba(255,215,0,0.8)' }}>
+                                    style={{ color: 'rgba(255,255,255,0.7)' }}>
                                     {status}
                                 </p>
                             )}

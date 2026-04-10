@@ -87,7 +87,7 @@ function NavLink({ to, children, delay }) {
                     color: hovered ? '#ffffff' : 'rgba(255,255,255,0.6)',
                     textShadow: hovered
                         ? '2px 2px 0px rgba(220,38,38,1), 4px 4px 0px rgba(150,0,0,0.6), 0 0 32px rgba(220,38,38,0.8)'
-                        : '2px 2px 0px rgba(255,215,0,0.6), 4px 4px 0px rgba(180,150,0,0.3)',
+                        : '2px 2px 0px rgba(255,255,255,0.4), 4px 4px 0px rgba(255,255,255,0.15)',
                     transition: 'all 0.2s ease',
                     display: 'inline-block',
                     transform: hovered ? 'scale(1.08)' : 'scale(1)',
@@ -154,18 +154,18 @@ return (
     <div className="flex items-center gap-16 mb-8">
         <h1
             className="text-7xl font-black text-white tracking-widest italic"
-            style={{ textShadow: '0 0 20px rgba(255,215,0,0.8)' }}
+            style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
         >
             {/* Line 1 types first, then line 2 appears when line1Done is true */}
             <TypeLine text="ABD-ALRHMAN'S" onDone={() => setLine1Done(true)} />
             {!line1Done && (
-                <span style={{ color: 'rgba(255,215,0,0.9)' }}>{showCursor ? '|' : ''}</span>
+                <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
             )}
             <br />
             {line1Done && (
                 <span style={{ fontSize: '6rem', marginLeft: '10rem' }}>
                     <TypeLine text="PORTFOLIO!" />
-                    <span style={{ color: 'rgba(255,215,0,0.9)' }}>{showCursor ? '|' : ''}</span>
+                    <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
                 </span>
             )}
         </h1>

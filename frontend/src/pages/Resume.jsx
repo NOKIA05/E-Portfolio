@@ -32,7 +32,7 @@ function Resume() {
                     href="https://e-portfolio-l09x.onrender.com/api/resume"
                     download
                     className="text-2xl font-bold tracking-widest inline-block"
-                    style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,215,0,0.6)', textDecoration: 'none' }}
+                    style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,255,255,0.5)', textDecoration: 'none' }}
                 >
                     ↓ Download
                 </a>
@@ -44,18 +44,18 @@ function Resume() {
                     <Link
                         to="/"
                         className="text-2xl font-bold tracking-widest mb-12 inline-block"
-                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,215,0,0.6)' }}
+                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,255,255,0.5)' }}
                     >
                         ← Back
                     </Link>
 
                     <h1
                         className="text-6xl font-black text-white tracking-widest italic mb-12"
-                        style={{ textShadow: '0 0 20px rgba(255,215,0,0.8)' }}
+                        style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
                     >
                         <TypeLine text="Resume" onDone={() => setTitleDone(true)} />
                         {!titleDone && (
-                            <span style={{ color: 'rgba(255,215,0,0.9)' }}>{showCursor ? '|' : ''}</span>
+                            <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
                         )}
                     </h1>
 
@@ -70,10 +70,10 @@ function Resume() {
                                     transition={{ duration: 0.5, delay: n * 0.1 }}
                                     style={{
                                         flex: 1,
-                                        border: '1px solid rgba(255,215,0,0.2)',
+                                        border: '1px solid rgba(255,255,255,0.15)',
                                         borderRadius: '12px',
                                         overflow: 'hidden',
-                                        boxShadow: '0 0 40px rgba(255,215,0,0.08)',
+                                        boxShadow: '0 0 40px rgba(255,255,255,0.06)',
                                     }}
                                 >
                                     <img
