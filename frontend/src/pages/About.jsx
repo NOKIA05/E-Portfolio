@@ -77,7 +77,7 @@ function About() {
                                 >
                                     <p
                                         className="text-sm font-black tracking-widest mb-3"
-                                        style={{ color: 'rgba(220,38,38,0.9)' }}
+                                        style={{ color: 'rgba(255,215,0,0.9)' }}
                                     >
                                         {section.label}
                                     </p>
@@ -118,7 +118,7 @@ function About() {
                                 >
                                     <FaGithub size={36} style={{ color: 'rgba(255,255,255,0.9)', flexShrink: 0 }} />
                                     <div>
-                                        <p className="text-sm font-black tracking-widest mb-1" style={{ color: 'rgba(220,38,38,0.9)' }}>GITHUB</p>
+                                        <p className="text-sm font-black tracking-widest mb-1" style={{ color: 'rgba(255,215,0,0.9)' }}>GITHUB</p>
                                         <p className="text-base tracking-wide" style={{ color: 'rgba(255,255,255,0.6)' }}>Check out my code and projects</p>
                                     </div>
                                 </motion.a>
@@ -148,7 +148,7 @@ function About() {
                                 >
                                     <FaLinkedin size={36} style={{ color: 'rgba(10,102,194,0.9)', flexShrink: 0 }} />
                                     <div>
-                                        <p className="text-sm font-black tracking-widest mb-1" style={{ color: 'rgba(220,38,38,0.9)' }}>LINKEDIN</p>
+                                        <p className="text-sm font-black tracking-widest mb-1" style={{ color: 'rgba(255,215,0,0.9)' }}>LINKEDIN</p>
                                         <p className="text-base tracking-wide" style={{ color: 'rgba(255,255,255,0.6)' }}>Connect with me professionally</p>
                                     </div>
                                 </motion.a>

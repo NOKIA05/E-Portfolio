@@ -85,7 +85,7 @@ function Skills() {
                                     {/* Category label in red */}
                                     <p
                                         className="text-sm font-black tracking-widest mb-4"
-                                        style={{ color: 'rgba(220,38,38,0.9)' }}
+                                        style={{ color: 'rgba(255,215,0,0.9)' }}
                                     >
                                         {group.label}
                                     </p>
