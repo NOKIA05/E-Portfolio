@@ -131,7 +131,7 @@ return (
         initial={{ opacity: 0, pathLength: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        style={{ marginBottom: '2rem', filter: 'drop-shadow(0 0 6px rgba(255,215,0,0.8))' }}
+        style={{ marginBottom: '2rem', filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
     >
         <motion.path
             d="M0,15 C120,0 240,30 360,15 C480,0 600,30 720,15 C840,0 960,30 1080,15 C1200,0 1320,30 1440,15"
@@ -144,8 +144,8 @@ return (
         />
         <defs>
             <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(220,38,38,1)" />
-                <stop offset="100%" stopColor="rgba(255,215,0,1)" />
+                <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,1)" />
             </linearGradient>
         </defs>
     </motion.svg>
@@ -181,7 +181,7 @@ return (
         preserveAspectRatio="none"
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
-        style={{ marginBottom: '2rem', filter: 'drop-shadow(0 0 6px rgba(255,215,0,0.8))' }}
+        style={{ marginBottom: '2rem', filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
     >
         <motion.path
             d="M0,15 C120,0 240,30 360,15 C480,0 600,30 720,15 C840,0 960,30 1080,15 C1200,0 1320,30 1440,15"
@@ -194,8 +194,8 @@ return (
         />
         <defs>
             <linearGradient id="lineGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(220,38,38,1)" />
-                <stop offset="100%" stopColor="rgba(255,215,0,1)" />
+                <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,1)" />
             </linearGradient>
         </defs>
     </motion.svg>
