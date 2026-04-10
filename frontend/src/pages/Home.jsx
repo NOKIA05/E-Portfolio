@@ -118,24 +118,8 @@ return (
 
     {/* Title section at the top */}
     <div className="w-full flex flex-col items-center pt-10">
-        <h1
-            className="text-7xl font-black text-white tracking-widest italic text-center"
-            style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
-        >
-            <TypeLine text="ABD-ALRHMAN'S" onDone={() => setLine1Done(true)} />
-            {!line1Done && (
-                <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
-            )}
-            <br />
-            {line1Done && (
-                <span style={{ fontSize: '6rem' }}>
-                    <TypeLine text="PORTFOLIO!" />
-                    <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
-                </span>
-            )}
-        </h1>
 
-        {/* First squiggly line */}
+        {/* First squiggly line — above the title */}
         <motion.svg
             width="100%"
             height="30"
@@ -144,7 +128,7 @@ return (
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
-            style={{ marginTop: '1.5rem', filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
+            style={{ marginBottom: '1.5rem', filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
         >
             <motion.path
                 d="M0,15 C120,0 240,30 360,15 C480,0 600,30 720,15 C840,0 960,30 1080,15 C1200,0 1320,30 1440,15"
@@ -162,19 +146,25 @@ return (
                 </linearGradient>
             </defs>
         </motion.svg>
-    </div>
 
-    {/* Nav links centered in the middle of the page */}
-    <div className="flex flex-col items-center justify-center flex-1 gap-12 my-auto py-24">
-        <NavLink to="/about" delay={0.1}>About</NavLink>
-        <NavLink to="/skills" delay={0.25}>Skills</NavLink>
-        <NavLink to="/projects" delay={0.4}>Projects</NavLink>
-        <NavLink to="/resume" delay={0.55}>Resume</NavLink>
-        <NavLink to="/contact" delay={0.7}>Contact</NavLink>
-    </div>
+        <h1
+            className="text-7xl font-black text-white tracking-widest italic text-center"
+            style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
+        >
+            <TypeLine text="ABD-ALRHMAN'S" onDone={() => setLine1Done(true)} />
+            {!line1Done && (
+                <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
+            )}
+            <br />
+            {line1Done && (
+                <span style={{ fontSize: '6rem' }}>
+                    <TypeLine text="PORTFOLIO!" />
+                    <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
+                </span>
+            )}
+        </h1>
 
-    {/* Second squiggly line at the bottom */}
-    <div className="w-full">
+        {/* Second squiggly line — below the title */}
         <motion.svg
             width="100%"
             height="30"
@@ -182,7 +172,7 @@ return (
             preserveAspectRatio="none"
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            style={{ filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
+            style={{ marginTop: '1.5rem', filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
         >
             <motion.path
                 d="M0,15 C120,0 240,30 360,15 C480,0 600,30 720,15 C840,0 960,30 1080,15 C1200,0 1320,30 1440,15"
@@ -200,6 +190,18 @@ return (
                 </linearGradient>
             </defs>
         </motion.svg>
+    </div>
+
+    {/* Nav links centered in the middle of the page */}
+    <div className="flex flex-col items-center justify-center flex-1 gap-12 my-auto py-24">
+        <NavLink to="/about" delay={0.1}>About</NavLink>
+        <NavLink to="/skills" delay={0.25}>Skills</NavLink>
+        <NavLink to="/projects" delay={0.4}>Projects</NavLink>
+        <NavLink to="/resume" delay={0.55}>Resume</NavLink>
+        <NavLink to="/contact" delay={0.7}>Contact</NavLink>
+    </div>
+
+    <div className="w-full">
     </div>
 
     </div>
