@@ -111,99 +111,95 @@ function Home() {
     }, [])
 
 return (
-    <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden flex flex-col items-center">
     <Background />
 
     <div className="relative z-10 flex flex-col items-center w-full">
 
-    {/* Top nav — add more NavLinks here to grow the navigation */}
-    <div className="flex gap-32 mb-8">
-        <NavLink to="/projects" delay={0}>Projects</NavLink>
-        <NavLink to="/skills" delay={0.15}>Skills</NavLink>
-    </div>
-
-    {/* Squiggly decorative line — animates drawing left to right on load */}
-    <motion.svg
-        width="100%"
-        height="30"
-        viewBox="0 0 1440 30"
-        preserveAspectRatio="none"
-        initial={{ opacity: 0, pathLength: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        style={{ marginBottom: '2rem', filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
-    >
-        <motion.path
-            d="M0,15 C120,0 240,30 360,15 C480,0 600,30 720,15 C840,0 960,30 1080,15 C1200,0 1320,30 1440,15"
-            fill="none"
-            stroke="url(#lineGrad1)"
-            strokeWidth="2"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1.2, ease: 'easeInOut' }}
-        />
-        <defs>
-            <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
-                <stop offset="100%" stopColor="rgba(255,255,255,1)" />
-            </linearGradient>
-        </defs>
-    </motion.svg>
-
-    {/* Middle — main name heading types out, About link sits to the right */}
-    <div className="flex items-center gap-16 mb-8">
+    {/* Title section at the top */}
+    <div className="w-full flex flex-col items-center pt-10">
         <h1
-            className="text-7xl font-black text-white tracking-widest italic"
+            className="text-7xl font-black text-white tracking-widest italic text-center"
             style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
         >
-            {/* Line 1 types first, then line 2 appears when line1Done is true */}
             <TypeLine text="ABD-ALRHMAN'S" onDone={() => setLine1Done(true)} />
             {!line1Done && (
                 <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
             )}
             <br />
             {line1Done && (
-                <span style={{ fontSize: '6rem', marginLeft: '10rem' }}>
+                <span style={{ fontSize: '6rem' }}>
                     <TypeLine text="PORTFOLIO!" />
                     <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
                 </span>
             )}
         </h1>
 
-        <NavLink to="/about" delay={0.3}>About</NavLink>
+        {/* First squiggly line */}
+        <motion.svg
+            width="100%"
+            height="30"
+            viewBox="0 0 1440 30"
+            preserveAspectRatio="none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+            style={{ marginTop: '1.5rem', filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
+        >
+            <motion.path
+                d="M0,15 C120,0 240,30 360,15 C480,0 600,30 720,15 C840,0 960,30 1080,15 C1200,0 1320,30 1440,15"
+                fill="none"
+                stroke="url(#lineGrad1)"
+                strokeWidth="2"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1.2, ease: 'easeInOut' }}
+            />
+            <defs>
+                <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
+                    <stop offset="100%" stopColor="rgba(255,255,255,1)" />
+                </linearGradient>
+            </defs>
+        </motion.svg>
     </div>
 
-    {/* Second squiggly line */}
-    <motion.svg
-        width="100%"
-        height="30"
-        viewBox="0 0 1440 30"
-        preserveAspectRatio="none"
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        style={{ marginBottom: '2rem', filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
-    >
-        <motion.path
-            d="M0,15 C120,0 240,30 360,15 C480,0 600,30 720,15 C840,0 960,30 1080,15 C1200,0 1320,30 1440,15"
-            fill="none"
-            stroke="url(#lineGrad2)"
-            strokeWidth="2"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1.2, delay: 0.3, ease: 'easeInOut' }}
-        />
-        <defs>
-            <linearGradient id="lineGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
-                <stop offset="100%" stopColor="rgba(255,255,255,1)" />
-            </linearGradient>
-        </defs>
-    </motion.svg>
+    {/* Nav links centered in the middle of the page */}
+    <div className="flex flex-col items-center justify-center flex-1 gap-12 my-auto py-24">
+        <NavLink to="/about" delay={0.1}>About</NavLink>
+        <NavLink to="/skills" delay={0.25}>Skills</NavLink>
+        <NavLink to="/projects" delay={0.4}>Projects</NavLink>
+        <NavLink to="/resume" delay={0.55}>Resume</NavLink>
+        <NavLink to="/contact" delay={0.7}>Contact</NavLink>
+    </div>
 
-    {/* Bottom nav */}
-    <div className="flex gap-32 mt-8">
-        <NavLink to="/contact" delay={0.6}>Contact</NavLink>
-        <NavLink to="/resume" delay={0.75}>Resume</NavLink>
+    {/* Second squiggly line at the bottom */}
+    <div className="w-full">
+        <motion.svg
+            width="100%"
+            height="30"
+            viewBox="0 0 1440 30"
+            preserveAspectRatio="none"
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            style={{ filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
+        >
+            <motion.path
+                d="M0,15 C120,0 240,30 360,15 C480,0 600,30 720,15 C840,0 960,30 1080,15 C1200,0 1320,30 1440,15"
+                fill="none"
+                stroke="url(#lineGrad2)"
+                strokeWidth="2"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1.2, delay: 0.3, ease: 'easeInOut' }}
+            />
+            <defs>
+                <linearGradient id="lineGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
+                    <stop offset="100%" stopColor="rgba(255,255,255,1)" />
+                </linearGradient>
+            </defs>
+        </motion.svg>
     </div>
 
     </div>
