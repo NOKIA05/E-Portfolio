@@ -52,7 +52,7 @@ function Contact() {
                     <Link
                         to="/"
                         className="text-2xl font-bold tracking-widest mb-12 inline-block"
-                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '2px 2px 0px rgba(255,215,0,0.5), 4px 4px 0px rgba(255,215,0,0.25)' }}
+                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '0 0 10px rgba(255,255,255,0.3)' }}
                     >
                         ← Back
                     </Link>
