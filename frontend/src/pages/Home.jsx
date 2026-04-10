@@ -82,7 +82,7 @@ function NavLink({ to, children, delay }) {
                 to={to}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-                className="text-4xl font-bold tracking-widest"
+                className="text-5xl font-bold tracking-widest"
                 style={{
                     color: hovered ? '#ffffff' : 'rgba(255,255,255,0.6)',
                     textShadow: hovered
