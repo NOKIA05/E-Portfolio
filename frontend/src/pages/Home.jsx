@@ -89,22 +89,19 @@ function NavLink({ to, children, delay }) {
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     width: '130%',
-                    height: '280%',
+                    height: '300%',
                     pointerEvents: 'none',
-                    opacity: hovered ? 0.55 : 0.3,
+                    opacity: hovered ? 0.6 : 0.25,
                     transition: 'opacity 0.25s ease',
                     overflow: 'visible',
                 }}
-                viewBox="0 0 300 80"
+                viewBox="0 0 320 80"
                 preserveAspectRatio="none"
             >
-                <defs>
-                    <filter id="brush" x="-20%" y="-40%" width="140%" height="180%">
-                        <feTurbulence type="turbulence" baseFrequency="0.035 0.12" numOctaves="3" seed="5" result="noise" />
-                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
-                    </filter>
-                </defs>
-                <rect x="15" y="18" width="270" height="44" rx="20" fill="white" filter="url(#brush)" />
+                <path
+                    d="M12,40 C10,28 20,14 42,16 C58,17 72,12 90,15 C108,18 124,11 142,13 C160,15 178,10 196,13 C214,16 230,11 248,14 C264,17 278,13 295,18 C310,23 315,32 312,42 C309,52 298,60 280,58 C262,56 244,62 226,60 C208,58 190,63 172,61 C154,59 136,63 118,61 C100,59 82,63 64,61 C46,59 28,62 14,56 C6,52 10,46 12,40 Z"
+                    fill="white"
+                />
             </svg>
 
             <Link
