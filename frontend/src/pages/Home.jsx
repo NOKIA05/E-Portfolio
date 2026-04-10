@@ -77,13 +77,38 @@ function NavLink({ to, children, delay }) {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay }}
+            onHoverStart={() => setHovered(true)}
+            onHoverEnd={() => setHovered(false)}
+            style={{ position: 'relative', display: 'inline-block' }}
         >
+            {/* Brushstroke background */}
+            <svg
+                style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '115%',
+                    height: '220%',
+                    pointerEvents: 'none',
+                    opacity: hovered ? 0.22 : 0.08,
+                    transition: 'opacity 0.25s ease',
+                }}
+                viewBox="0 0 200 60"
+                preserveAspectRatio="none"
+            >
+                <path
+                    d="M8,30 C12,16 32,10 62,14 C92,18 128,21 158,17 C178,14 194,18 198,28 C194,40 176,46 152,44 C122,41 88,38 58,41 C30,44 6,44 8,30 Z"
+                    fill="white"
+                />
+            </svg>
+
             <Link
                 to={to}
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
                 className="text-5xl font-bold tracking-widest"
                 style={{
+                    position: 'relative',
+                    zIndex: 1,
                     color: hovered ? '#ffffff' : 'rgba(255,255,255,0.6)',
                     textShadow: hovered
                         ? '0 0 20px rgba(255,255,255,0.9), 0 0 40px rgba(255,255,255,0.4)'
