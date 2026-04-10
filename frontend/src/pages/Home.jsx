@@ -86,8 +86,8 @@ function NavLink({ to, children, delay }) {
                 style={{
                     color: hovered ? '#ffffff' : 'rgba(255,255,255,0.6)',
                     textShadow: hovered
-                        ? '2px 2px 0px rgba(220,38,38,1), 4px 4px 0px rgba(255,215,0,0.8), 0 0 32px rgba(255,215,0,0.6)'
-                        : '2px 2px 0px rgba(220,38,38,0.6), 4px 4px 0px rgba(255,215,0,0.4)',
+                        ? '2px 2px 0px rgba(255,215,0,0.9), 4px 4px 0px rgba(255,215,0,0.5), 0 0 32px rgba(255,215,0,0.6)'
+                        : '2px 2px 0px rgba(255,215,0,0.5), 4px 4px 0px rgba(255,215,0,0.25)',
                     transition: 'all 0.2s ease',
                     display: 'inline-block',
                     transform: hovered ? 'scale(1.08)' : 'scale(1)',
