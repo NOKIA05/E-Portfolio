@@ -1,24 +1,21 @@
-// Projects.jsx — fetches projects from the Flask API and displays them as glass cards.
-// To add a project: use psql → INSERT INTO projects (title, description) VALUES ('...', '...');
-// To remove a project: use psql → DELETE FROM projects WHERE id = <id>;
-// After deployment: replace https://e-portfolio-l09x.onrender.com with your Render backend URL
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Background from '../components/Backgrounds'
 import TypeLine from '../components/TypeLine'
+import { supabase } from '../lib/supabase'
 
 function Projects() {
     const [projects, setProjects] = useState([])
-    // titleDone: controls when project cards appear (after "Projects" finishes typing)
     const [titleDone, setTitleDone] = useState(false)
     const [showCursor, setShowCursor] = useState(true)
 
-    // Fetches all projects from the backend on page load
     useEffect(() => {
-        fetch('https://e-portfolio-l09x.onrender.com/api/projects')
-            .then(res => res.json())
-            .then(data => setProjects(data))
+        supabase
+            .from('projects')
+            .select('*')
+            .order('created_at', { ascending: true })
+            .then(({ data }) => { if (data) setProjects(data) })
     }, [])
 
     useEffect(() => {
@@ -30,7 +27,6 @@ function Projects() {
         <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden">
             <Background />
             <div className="relative z-10 p-12">
-                {/* Back button — same style used on every inner page */}
                 <Link
                     to="/"
                     className="text-2xl font-bold tracking-widest mb-12 inline-block"
@@ -49,16 +45,13 @@ function Projects() {
                     )}
                 </h1>
 
-                {/* Only renders after title is done typing */}
                 {titleDone && (
                     projects.length === 0 ? (
-                        // Shown if the database has no projects yet
                         <p className="text-2xl tracking-widest" style={{ color: 'rgba(255,255,255,0.4)' }}>
                             <TypeLine text="No projects yet." />
                             <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
                         </p>
                     ) : (
-                        // Each project from the DB becomes a hoverable glass card
                         projects.map((project, index) => (
                             <motion.div
                                 key={project.id}
@@ -77,13 +70,39 @@ function Projects() {
                                     cursor: 'default',
                                 }}
                             >
-                                <h2 className="text-3xl font-bold text-white tracking-widest mb-2"
-                                    style={{ textShadow: '2px 2px 0px rgba(255,255,255,0.3)' }}>
+                                <h2
+                                    className="text-3xl font-bold text-white tracking-widest mb-2"
+                                    style={{ textShadow: '2px 2px 0px rgba(255,255,255,0.3)' }}
+                                >
                                     {project.title}
                                 </h2>
-                                <p style={{ color: 'rgba(255,255,255,0.6)' }} className="text-lg tracking-wide">
+                                <p style={{ color: 'rgba(255,255,255,0.6)' }} className="text-lg tracking-wide mb-4">
                                     {project.description}
                                 </p>
+                                <div className="flex gap-4">
+                                    {project.github_url && (
+                                        <a
+                                            href={project.github_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-sm font-bold tracking-widest"
+                                            style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}
+                                        >
+                                            GitHub →
+                                        </a>
+                                    )}
+                                    {project.live_url && (
+                                        <a
+                                            href={project.live_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-sm font-bold tracking-widest"
+                                            style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}
+                                        >
+                                            Live Site →
+                                        </a>
+                                    )}
+                                </div>
                             </motion.div>
                         ))
                     )
