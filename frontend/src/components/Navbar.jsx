@@ -56,7 +56,7 @@ function Navbar() {
           >
             AO
           </span>
-          <span className="text-[15px] font-semibold tracking-tight text-white">
+          <span className="font-display text-[15px] font-semibold tracking-tight text-white">
             Abd-alrhman Odeh
           </span>
         </Link>

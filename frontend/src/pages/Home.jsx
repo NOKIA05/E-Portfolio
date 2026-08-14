@@ -88,8 +88,8 @@ function Home() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-4xl text-[2.75rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
-          style={{ letterSpacing: '-0.04em' }}
+          className="max-w-4xl text-[2.75rem] font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
+          style={{ letterSpacing: '-0.025em' }}
         >
           <span className="text-white">{PROFILE.name}</span>
           <br />
@@ -163,7 +163,7 @@ function Home() {
       <Reveal as="section" className="grid gap-4 sm:grid-cols-3">
         {STATS.map((s, i) => (
           <Reveal key={s.label} delay={i * 0.08} className="card card-sheen p-6">
-            <p className="text-2xl font-bold tracking-tight text-white">
+            <p className="font-display text-2xl font-bold tracking-tight text-white">
               {s.value}
             </p>
             <p className="mt-1.5 text-sm text-[#a89e91]">{s.label}</p>
@@ -192,7 +192,7 @@ function Home() {
             <p className="eyebrow mb-3">Selected work</p>
             <h2
               className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
-              style={{ letterSpacing: '-0.03em' }}
+              style={{ letterSpacing: '-0.02em' }}
             >
               Things I&apos;ve built
             </h2>
@@ -255,7 +255,7 @@ function Home() {
         >
           <h2
             className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
-            style={{ letterSpacing: '-0.03em' }}
+            style={{ letterSpacing: '-0.02em' }}
           >
             Let&apos;s build something
           </h2>

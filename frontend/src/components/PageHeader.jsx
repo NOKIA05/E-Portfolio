@@ -20,8 +20,8 @@ function PageHeader({ eyebrow, title, subtitle }) {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-        className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl"
-        style={{ letterSpacing: '-0.03em' }}
+        className="text-4xl font-bold tracking-tight text-white sm:text-5xl"
+        style={{ letterSpacing: '-0.02em' }}
       >
         {title}
       </motion.h1>
