@@ -74,38 +74,19 @@ h3,
   color: #221302;
 }
 
-/* Constrain what CAN be selected. Safari paints selection over entire
-   containers (including empty gaps) when a drag crosses block boundaries,
-   which looks like giant brown rectangles. Making layout containers
-   unselectable and re-enabling selection ONLY on text elements means the
-   highlight can never cover more than the words themselves. */
-body {
+/* Text selection is disabled site-wide. Safari paints selection highlights
+   across entire containers and empty gaps with this layout (looks like giant
+   solid rectangles), and scoping user-select to text elements didn't stop it.
+   The only place selection is needed is the contact form, so only inputs and
+   textareas allow it. To re-enable selection everywhere, delete this block. */
+* {
   -webkit-user-select: none;
   user-select: none;
 }
-p,
-h1,
-h2,
-h3,
-h4,
-li,
-a,
-span,
-figcaption,
-blockquote,
-code,
-pre,
-label,
 input,
 textarea {
   -webkit-user-select: text;
   user-select: text;
-}
-/* Buttons and button-styled links stay unselectable (they're controls) */
-button,
-.btn {
-  -webkit-user-select: none;
-  user-select: none;
 }
 
 /* Slim dark scrollbar so it doesn't break the dark canvas */
