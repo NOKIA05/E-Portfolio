@@ -6,6 +6,20 @@
 //                     tech (text[] or comma-separated text), featured (bool)
 import { FiArrowUpRight, FiGithub } from 'react-icons/fi'
 
+// Only render links with a safe scheme. Guards against a compromised or
+// misconfigured database row smuggling a javascript: URL into an href.
+function safeUrl(url) {
+  if (!url) return null
+  try {
+    const parsed = new URL(url)
+    return parsed.protocol === 'https:' || parsed.protocol === 'http:'
+      ? url
+      : null
+  } catch {
+    return null
+  }
+}
+
 // `tech` may come back as a Postgres array, a comma-separated string, or null
 function toTechList(tech) {
   if (!tech) return []
@@ -18,7 +32,9 @@ function toTechList(tech) {
 
 function ProjectCard({ project }) {
   const tech = toTechList(project.tech ?? project.tags ?? project.stack)
-  const primary = project.live_url || project.github_url
+  const githubUrl = safeUrl(project.github_url)
+  const liveUrl = safeUrl(project.live_url)
+  const primary = liveUrl || githubUrl
 
   return (
     <article className="card card-hover card-sheen group flex h-full flex-col p-6">
@@ -50,11 +66,11 @@ function ProjectCard({ project }) {
         </div>
       )}
 
-      {(project.github_url || project.live_url) && (
+      {(githubUrl || liveUrl) && (
         <div className="mt-6 flex items-center gap-4 border-t border-white/[0.06] pt-4">
-          {project.github_url && (
+          {githubUrl && (
             <a
-              href={project.github_url}
+              href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-sm font-medium text-[#a89e91] transition-colors hover:text-white"
@@ -64,9 +80,9 @@ function ProjectCard({ project }) {
               Source
             </a>
           )}
-          {project.live_url && (
+          {liveUrl && (
             <a
-              href={project.live_url}
+              href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-sm font-medium text-[#e5a854] transition-colors hover:text-white"
