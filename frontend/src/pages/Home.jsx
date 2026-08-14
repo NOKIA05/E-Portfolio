@@ -79,7 +79,7 @@ function Home() {
           className="mb-4 font-mono text-[13px] tracking-tight"
           aria-hidden="true"
         >
-          <span style={{ color: '#d18e3f' }}>abood@memphis</span>
+          <span style={{ color: '#d18e3f' }}>abdelrahmanodeh50@gmail.com</span>
           <span className="text-[#7d7365]">:~$ </span>
           <span className="text-[#d4c9ba]">whoami</span>
         </motion.p>
