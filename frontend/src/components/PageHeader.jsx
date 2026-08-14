@@ -1,4 +1,4 @@
-// PageHeader.jsx — the title block at the top of every inner page.
+// PageHeader.jsx - the title block at the top of every inner page.
 // Keeps the eyebrow / heading / subtitle rhythm identical site-wide.
 import { motion } from 'framer-motion'
 

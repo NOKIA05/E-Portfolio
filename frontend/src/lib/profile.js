@@ -1,4 +1,4 @@
-// profile.js — every piece of hand-written content on the site lives here.
+// profile.js - every piece of hand-written content on the site lives here.
 // Editing your bio, skills, links, or timeline is a one-file job: change it
 // below and every page that uses it updates.
 
@@ -29,7 +29,7 @@ export const STATS = [
   { value: 'Amman → Memphis', label: 'Where I started / where I am' },
 ]
 
-// About page — each entry is one card
+// About page - each entry is one card
 export const ABOUT_SECTIONS = [
   {
     label: 'Who I am',
@@ -49,7 +49,7 @@ export const ABOUT_SECTIONS = [
   },
 ]
 
-// Skills page — each group becomes a card, each skill a pill
+// Skills page - each group becomes a card, each skill a pill
 export const SKILL_GROUPS = [
   {
     label: 'Languages',

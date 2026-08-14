@@ -1,4 +1,4 @@
-// ProjectCard.jsx — one project tile, shared by the home page and /projects.
+// ProjectCard.jsx - one project tile, shared by the home page and /projects.
 // Reads a row from the Supabase `projects` table. Only `title` is required;
 // every other column is optional and simply doesn't render if it's empty.
 //

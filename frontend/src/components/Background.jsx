@@ -1,4 +1,4 @@
-// Background.jsx — the ambient canvas behind every page.
+// Background.jsx - the ambient canvas behind every page.
 // Three layers, all pure CSS (no per-frame JS, so it stays cheap on mobile):
 //   1. a faint dot grid
 //   2. two slow-drifting aurora blobs
@@ -61,7 +61,7 @@ function Background() {
         />
       ))}
 
-      {/* 3. Scanlines — faint horizontal CRT lines, static (reduced-motion safe) */}
+      {/* 3. Scanlines - faint horizontal CRT lines, static (reduced-motion safe) */}
       <div
         className="absolute inset-0"
         style={{

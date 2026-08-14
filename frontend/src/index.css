@@ -1,8 +1,8 @@
-/* index.css — global styles + the design system for the whole site.
+/* index.css - global styles + the design system for the whole site.
    Everything visual starts here: colors, type, and the shared primitives
    (.card, .btn, .pill, .field) that every page reuses.
 
-   To re-skin the site, change the tokens in @theme below — nothing else. */
+   To re-skin the site, change the tokens in @theme below - nothing else. */
 
 @import "tailwindcss";
 
@@ -11,7 +11,7 @@
    Tailwind v4 reads these and generates utilities: bg-ink-900, text-fg-muted...
 --------------------------------------------------------------------------- */
 @theme {
-  /* Surfaces — near-black with a warm brown cast; editorial, print-like dark */
+  /* Surfaces - near-black with a warm brown cast; editorial, print-like dark */
   --color-ink-950: #080605;
   --color-ink-900: #0c0a08;
   --color-ink-850: #120e0b;
@@ -30,7 +30,7 @@
   --color-accent-deep: #8a5a1c;
   --color-copper: #b85c38;
 
-  /* Typography — DM Sans everywhere; JetBrains Mono for labels/terminal bits.
+  /* Typography - DM Sans everywhere; JetBrains Mono for labels/terminal bits.
      To change the site font: swap the family here (and the Google Fonts link
      in index.html) and the whole site follows. */
   --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -59,7 +59,7 @@ body {
 }
 
 /* Headings can use a separate display face via --font-display.
-   Currently the same family as body — swap the token to split them. */
+   Currently the same family as body - swap the token to split them. */
 h1,
 h2,
 h3,
@@ -89,7 +89,7 @@ h3,
   background: #373026;
 }
 
-/* Keyboard focus ring — visible, but only for keyboard users */
+/* Keyboard focus ring - visible, but only for keyboard users */
 :focus-visible {
   outline: 2px solid #e5a854;
   outline-offset: 2px;
@@ -97,7 +97,7 @@ h3,
 }
 
 /* ---------------------------------------------------------------------------
-   PRIMITIVES — reuse these instead of writing one-off inline styles
+   PRIMITIVES - reuse these instead of writing one-off inline styles
 --------------------------------------------------------------------------- */
 
 /* Glass panel with a thin luminous edge */
@@ -118,7 +118,7 @@ h3,
     box-shadow 0.25s var(--ease-out-expo);
 }
 
-/* Interactive version — lifts and brightens on hover */
+/* Interactive version - lifts and brightens on hover */
 .card-hover:hover {
   border-color: rgba(255, 255, 255, 0.16);
   background: linear-gradient(
@@ -132,7 +132,7 @@ h3,
     0 18px 40px -18px rgba(0, 0, 0, 0.9);
 }
 
-/* Highlight line along the top edge — subtle Stripe-style sheen */
+/* Highlight line along the top edge - subtle Stripe-style sheen */
 .card-sheen::before {
   content: "";
   position: absolute;
@@ -149,7 +149,7 @@ h3,
 }
 
 /* Small uppercase mono label used above section content.
-   The "// " prefix is a terminal/HUD detail — remove the ::before to drop it. */
+   The "// " prefix is a terminal/HUD detail - remove the ::before to drop it. */
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
@@ -191,7 +191,7 @@ h3,
 }
 
 .btn-primary {
-  /* Dark text on amber — white text fails contrast on this background */
+  /* Dark text on amber - white text fails contrast on this background */
   color: #221302;
   background: linear-gradient(180deg, #e9b063, #d18e3f);
   border: 1px solid rgba(255, 255, 255, 0.16);

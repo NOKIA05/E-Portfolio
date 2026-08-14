@@ -1,4 +1,4 @@
-// About.jsx — bio cards, a short timeline, and social links.
+// About.jsx - bio cards, a short timeline, and social links.
 // All the text lives in src/lib/profile.js (ABOUT_SECTIONS, TIMELINE).
 import { FiArrowUpRight, FiMail } from 'react-icons/fi'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
@@ -22,7 +22,7 @@ function About() {
         subtitle={`${PROFILE.role} · ${PROFILE.location}`}
       />
 
-      {/* Bio cards — two up on desktop */}
+      {/* Bio cards - two up on desktop */}
       <div className="grid gap-5 sm:grid-cols-2">
         {ABOUT_SECTIONS.map((section, i) => (
           <Reveal key={section.label} delay={i * 0.07} className="h-full">

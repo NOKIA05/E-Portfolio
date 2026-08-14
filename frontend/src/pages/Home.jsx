@@ -1,4 +1,4 @@
-// Home.jsx — the landing page.
+// Home.jsx - the landing page.
 // Sections: hero → stats → featured projects (live from Supabase) → stack → CTA.
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -71,7 +71,7 @@ function Home() {
           </span>
         </motion.div>
 
-        {/* Terminal prompt — a small cybersecurity wink above the headline */}
+        {/* Terminal prompt - a small cybersecurity wink above the headline */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

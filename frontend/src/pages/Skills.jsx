@@ -1,4 +1,4 @@
-// Skills.jsx — skills grouped into cards, each skill rendered as a pill.
+// Skills.jsx - skills grouped into cards, each skill rendered as a pill.
 // To edit: change SKILL_GROUPS in src/lib/profile.js.
 import PageHeader from '../components/PageHeader'
 import Reveal from '../components/Reveal'

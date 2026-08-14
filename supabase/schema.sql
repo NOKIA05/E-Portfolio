@@ -1,5 +1,5 @@
 -- ============================================================================
---  E-Portfolio — Supabase schema
+--  E-Portfolio - Supabase schema
 --  Run this once in the Supabase dashboard → SQL Editor → New query → Run.
 --  Every statement is idempotent, so re-running it is safe.
 -- ============================================================================
@@ -9,7 +9,7 @@
 --  1. CONTACT MESSAGES
 --  The contact form writes straight into this table (no backend server).
 --  RLS: anonymous visitors may INSERT only. Nobody can read the table with the
---  public anon key — you read your messages from the Supabase dashboard.
+--  public anon key - you read your messages from the Supabase dashboard.
 -- ----------------------------------------------------------------------------
 create table if not exists public.messages (
   id          uuid primary key default gen_random_uuid(),
@@ -46,7 +46,7 @@ create index if not exists messages_created_at_idx
 
 -- ----------------------------------------------------------------------------
 --  2. PROJECTS
---  Already exists — this section just makes sure the shape matches what the
+--  Already exists - this section just makes sure the shape matches what the
 --  new front end renders, and that public reads are allowed.
 -- ----------------------------------------------------------------------------
 

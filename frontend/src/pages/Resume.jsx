@@ -1,4 +1,4 @@
-// Resume.jsx — resume preview + download.
+// Resume.jsx - resume preview + download.
 // Both files are served straight from /public (no backend involved):
 //   public/resume.pdf and public/resume-preview-1.png
 // If the resume grows to two pages again: add resume-preview-2.png and put 2 in PAGES.

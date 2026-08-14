@@ -1,4 +1,4 @@
-// Reveal.jsx — the site's one scroll animation, used everywhere.
+// Reveal.jsx - the site's one scroll animation, used everywhere.
 // Fades + lifts its children the first time they enter the viewport.
 //
 //   <Reveal delay={0.1}><Card /></Reveal>

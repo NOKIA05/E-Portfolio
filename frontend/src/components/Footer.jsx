@@ -1,4 +1,4 @@
-// Footer.jsx — shared footer on every page.
+// Footer.jsx - shared footer on every page.
 import { Link } from 'react-router-dom'
 import { FiMail } from 'react-icons/fi'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'

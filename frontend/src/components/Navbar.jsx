@@ -1,4 +1,4 @@
-// Navbar.jsx — the persistent top navigation on every page.
+// Navbar.jsx - the persistent top navigation on every page.
 // Becomes a frosted bar once you scroll past 12px, collapses to a sheet on mobile.
 // To add a page to the nav: add it to the `links` array below.
 import { useEffect, useState } from 'react'

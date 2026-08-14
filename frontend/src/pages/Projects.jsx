@@ -1,4 +1,4 @@
-// Projects.jsx — every row from the Supabase `projects` table, as a card grid.
+// Projects.jsx - every row from the Supabase `projects` table, as a card grid.
 // Add or edit projects in the Supabase table editor; nothing here needs changing.
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'

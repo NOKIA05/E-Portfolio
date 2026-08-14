@@ -1,4 +1,4 @@
-// Contact.jsx — contact form.
+// Contact.jsx - contact form.
 // Writes straight into the Supabase `messages` table (no backend server).
 // Run supabase/schema.sql once to create the table + the insert-only RLS policy.
 import { useState } from 'react'
@@ -30,7 +30,7 @@ function Contact() {
     e.preventDefault()
     setError('')
 
-    // Client-side validation — the DB has matching CHECK constraints
+    // Client-side validation - the DB has matching CHECK constraints
     if (!form.name.trim()) return setError('Please add your name.')
     if (!EMAIL_RE.test(form.email.trim()))
       return setError('That email address doesn’t look right.')
@@ -145,7 +145,7 @@ function Contact() {
                   />
                 </label>
 
-                {/* Honeypot — hidden from humans, catnip for bots */}
+                {/* Honeypot - hidden from humans, catnip for bots */}
                 <input
                   name="company"
                   value={form.company}

@@ -1,4 +1,4 @@
-// App.jsx — the root of the React app: shared chrome + every route.
+// App.jsx - the root of the React app: shared chrome + every route.
 // To add a page: create it in src/pages/, import it, add a <Route />,
 // and (if it belongs in the nav) add it to `links` in components/Navbar.jsx.
 import { useEffect } from 'react'
@@ -15,7 +15,7 @@ import Projects from './pages/Projects'
 import Resume from './pages/Resume'
 import Contact from './pages/Contact'
 
-// React Router keeps scroll position between pages — reset it on navigation
+// React Router keeps scroll position between pages - reset it on navigation
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
