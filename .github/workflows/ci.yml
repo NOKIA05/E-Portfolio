@@ -1,0 +1,34 @@
+# CI - runs on every push and pull request.
+# Fails the check if a dependency has a known high/critical vulnerability
+# or if the production build breaks.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: Audit and build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install exact locked dependencies
+        run: npm ci
+
+      - name: Audit dependencies (fails on high or critical)
+        run: npm audit --audit-level=high
+
+      - name: Production build
+        run: npm run build

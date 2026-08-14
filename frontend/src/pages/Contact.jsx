@@ -1,7 +1,14 @@
 // Contact.jsx - contact form.
-// Writes straight into the Supabase `messages` table (no backend server).
-// Run supabase/schema.sql once to create the table + the insert-only RLS policy.
-import { useState } from 'react'
+// Submits to the `submit-message` Supabase Edge Function, which checks the
+// honeypot, verifies the Cloudflare Turnstile token server-side, rate-limits
+// by IP (via the DB trigger), and inserts the row.
+// Falls back to a direct database insert if the function isn't deployed yet,
+// so the form keeps working during setup.
+//
+// Setup: set VITE_TURNSTILE_SITE_KEY (locally in frontend/.env and in Vercel
+// env vars). Without it, the widget is skipped and the honeypot + rate limits
+// still apply.
+import { useEffect, useRef, useState } from 'react'
 import { FiSend, FiCheckCircle, FiAlertCircle, FiMail } from 'react-icons/fi'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
@@ -12,15 +19,54 @@ import { SOCIALS } from '../lib/profile'
 
 const EMPTY = { name: '', email: '', message: '', company: '' } // `company` = honeypot
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY
+const FN_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-message`
 
 function Contact() {
   const [form, setForm] = useState(EMPTY)
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const [error, setError] = useState('')
+  const [captchaToken, setCaptchaToken] = useState('')
+  const widgetRef = useRef(null)
+  const widgetId = useRef(null)
 
   const email = SOCIALS.find(s => s.id === 'email')
   const github = SOCIALS.find(s => s.id === 'github')
   const linkedin = SOCIALS.find(s => s.id === 'linkedin')
+
+  // Load and render the Cloudflare Turnstile widget (only if a site key is set)
+  useEffect(() => {
+    if (!SITE_KEY || status === 'sent') return
+
+    function render() {
+      if (window.turnstile && widgetRef.current && widgetId.current === null) {
+        widgetId.current = window.turnstile.render(widgetRef.current, {
+          sitekey: SITE_KEY,
+          theme: 'dark',
+          callback: token => setCaptchaToken(token),
+          'expired-callback': () => setCaptchaToken(''),
+        })
+      }
+    }
+
+    if (window.turnstile) {
+      render()
+    } else {
+      const script = document.createElement('script')
+      script.src =
+        'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
+      script.async = true
+      script.onload = render
+      document.head.appendChild(script)
+    }
+
+    return () => {
+      if (window.turnstile && widgetId.current !== null) {
+        window.turnstile.remove(widgetId.current)
+        widgetId.current = null
+      }
+    }
+  }, [status])
 
   function handleChange(e) {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }))
@@ -30,12 +76,13 @@ function Contact() {
     e.preventDefault()
     setError('')
 
-    // Client-side validation - the DB has matching CHECK constraints
     if (!form.name.trim()) return setError('Please add your name.')
     if (!EMAIL_RE.test(form.email.trim()))
       return setError('That email address doesn’t look right.')
     if (form.message.trim().length < 10)
       return setError('Message needs to be at least 10 characters.')
+    if (SITE_KEY && !captchaToken)
+      return setError('Please complete the verification below.')
 
     // Honeypot: real people never fill a hidden field, bots usually do
     if (form.company) {
@@ -45,10 +92,47 @@ function Contact() {
 
     setStatus('sending')
 
-    const { error: dbError } = await supabase.from('messages').insert({
+    const payload = {
       name: form.name.trim(),
       email: form.email.trim(),
       message: form.message.trim(),
+      company: form.company,
+      turnstileToken: captchaToken,
+    }
+
+    try {
+      const res = await fetch(FN_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify(payload),
+      })
+
+      if (res.ok) {
+        setStatus('sent')
+        setForm(EMPTY)
+        return
+      }
+
+      // Function exists but rejected the submission - show its reason
+      if (res.status !== 404) {
+        const data = await res.json().catch(() => ({}))
+        setStatus('error')
+        setError(data.error || "Couldn't send that. Try again, or email me directly.")
+        return
+      }
+      // 404 = function not deployed yet; fall through to direct insert
+    } catch {
+      // Network error reaching the function; fall through to direct insert
+    }
+
+    // Fallback: direct insert (works until turnstile.sql closes this path)
+    const { error: dbError } = await supabase.from('messages').insert({
+      name: payload.name,
+      email: payload.email,
+      message: payload.message,
     })
 
     if (dbError) {
@@ -161,6 +245,9 @@ function Contact() {
                     width: 0,
                   }}
                 />
+
+                {/* Cloudflare Turnstile - renders only when a site key is set */}
+                {SITE_KEY && <div ref={widgetRef} />}
 
                 {error && (
                   <p className="flex items-center gap-2 text-sm text-amber-400">
