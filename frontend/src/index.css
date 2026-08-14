@@ -67,9 +67,16 @@ h3,
   font-family: var(--font-display);
 }
 
-/* Selected text: solid amber with dark ink, so highlighting looks deliberate
-   instead of like a rendering glitch on the dark background */
+/* Selection highlight is invisible everywhere except form fields.
+   Belt-and-suspenders on top of user-select: none below - even if the
+   browser creates a selection anyway (e.g. Select All quirks), it paints
+   nothing. Form fields keep a visible amber highlight so editing works. */
 ::selection {
+  background: transparent;
+  color: inherit;
+}
+input::selection,
+textarea::selection {
   background: #e5a854;
   color: #221302;
 }
