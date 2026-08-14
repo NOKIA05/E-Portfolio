@@ -30,11 +30,11 @@
   --color-accent-deep: #8a5a1c;
   --color-copper: #b85c38;
 
-  /* Typography — Space Grotesk everywhere; JetBrains Mono for labels/terminal bits.
+  /* Typography — Sora everywhere; JetBrains Mono for labels/terminal bits.
      To change the site font: swap the family here (and the Google Fonts link
      in index.html) and the whole site follows. */
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Sora", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
 
   /* Motion */
@@ -58,8 +58,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings site-wide wear the display face (Space Grotesk).
-   Body copy stays in Inter for readability. */
+/* Headings can use a separate display face via --font-display.
+   Currently the same family as body — swap the token to split them. */
 h1,
 h2,
 h3,
