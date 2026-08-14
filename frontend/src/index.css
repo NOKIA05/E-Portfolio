@@ -67,9 +67,11 @@ h3,
   font-family: var(--font-display);
 }
 
+/* Selected text: solid amber with dark ink, so highlighting looks deliberate
+   instead of like a rendering glitch on the dark background */
 ::selection {
-  background: rgba(209, 142, 63, 0.4);
-  color: #fff;
+  background: #e5a854;
+  color: #221302;
 }
 
 /* Slim dark scrollbar so it doesn't break the dark canvas */
