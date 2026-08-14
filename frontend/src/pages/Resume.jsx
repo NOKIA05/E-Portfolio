@@ -1,13 +1,14 @@
 // Resume.jsx — resume preview + download.
-// All three files are served straight from /public (no backend involved):
-//   public/resume.pdf, public/resume-preview-1.png, public/resume-preview-2.png
+// Both files are served straight from /public (no backend involved):
+//   public/resume.pdf and public/resume-preview-1.png
+// If the resume grows to two pages again: add resume-preview-2.png and put 2 in PAGES.
 import { FiDownload, FiExternalLink } from 'react-icons/fi'
 
 import PageHeader from '../components/PageHeader'
 import Reveal from '../components/Reveal'
 
 const PDF_PATH = '/resume.pdf'
-const PAGES = [1, 2]
+const PAGES = [1]
 
 function Resume() {
   return (
@@ -16,7 +17,7 @@ function Resume() {
         <PageHeader
           eyebrow="Resume"
           title="Resume"
-          subtitle="Two pages. Grab the PDF, or read it right here."
+          subtitle="Grab the PDF, or read it right here."
         />
 
         <Reveal className="flex shrink-0 gap-3 pb-12">
@@ -40,7 +41,13 @@ function Resume() {
         </Reveal>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div
+        className={
+          PAGES.length > 1
+            ? 'grid gap-6 md:grid-cols-2'
+            : 'mx-auto max-w-3xl'
+        }
+      >
         {PAGES.map((n, i) => (
           <Reveal key={n} delay={i * 0.1}>
             <figure className="card card-sheen overflow-hidden p-2">
@@ -51,9 +58,6 @@ function Resume() {
                 className="w-full rounded-[10px]"
                 style={{ display: 'block' }}
               />
-              <figcaption className="px-2 py-2.5 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-[#7d7365]">
-                Page {n}
-              </figcaption>
             </figure>
           </Reveal>
         ))}
