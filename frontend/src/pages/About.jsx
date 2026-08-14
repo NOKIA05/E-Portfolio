@@ -1,164 +1,110 @@
-// About.jsx — the About page. Shows personal info in cards and social links at the bottom.
-// To update your bio: edit the `sections` array below — each object is one card.
-// To add a new card: add a new { label: '...', text: '...' } object to the array.
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+// About.jsx — bio cards, a short timeline, and social links.
+// All the text lives in src/lib/profile.js (ABOUT_SECTIONS, TIMELINE).
+import { FiArrowUpRight, FiMail } from 'react-icons/fi'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
-import Background from '../components/Backgrounds'
-import TypeLine from '../components/TypeLine'
 
-// Each section becomes a separate glass card on the page
-const sections = [
-    {
-        label: 'WHO I AM',
-        text: "My name is Abd-alrhman Odeh. I was born and raised in Amman, Jordan — where I spent my whole life up until graduating high school. After that, I made the move to the United States to pursue a degree in Cybersecurity. I'm currently a junior at the University of Memphis.",
-    },
-    {
-        label: 'WHAT I DO',
-        text: "I study cybersecurity and enjoy building things on the side. Whether it's a network tool, a web app, or just tinkering with code, I like seeing ideas come to life. This portfolio is one of those projects.",
-    },
-    {
-        label: 'OUTSIDE OF TECH',
-        text: "When I'm not studying or coding, you'll find me gaming, reading, or exploring whatever's around me. I picked up reading not too long ago and it's been a great way to slow down.",
-    },
-]
+import PageHeader from '../components/PageHeader'
+import Reveal from '../components/Reveal'
+import { ABOUT_SECTIONS, TIMELINE, SOCIALS, PROFILE } from '../lib/profile'
+
+const socialMeta = {
+  github: { Icon: FaGithub, blurb: 'Code, commits, and side projects' },
+  linkedin: { Icon: FaLinkedin, blurb: 'Experience and professional history' },
+  email: { Icon: FiMail, blurb: 'The fastest way to reach me' },
+}
 
 function About() {
-    // titleDone: controls when the bio cards appear (after "About" finishes typing)
-    const [titleDone, setTitleDone] = useState(false)
-    const [showCursor, setShowCursor] = useState(true)
+  return (
+    <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 sm:py-20">
+      <PageHeader
+        eyebrow="About"
+        title="A bit about me"
+        subtitle={`${PROFILE.role} · ${PROFILE.location}`}
+      />
 
-    useEffect(() => {
-        const blink = setInterval(() => setShowCursor(c => !c), 530)
-        return () => clearInterval(blink)
-    }, [])
-
-    return (
-        <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden">
-            <Background />
-            <div className="relative z-10 p-12 flex flex-col items-center">
-                <div className="w-full max-w-2xl">
-                    {/* Back button — same style used on every inner page */}
-                    <Link
-                        to="/"
-                        className="text-2xl font-bold tracking-widest mb-12 inline-block"
-                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '0 0 10px rgba(255,255,255,0.3)' }}
-                    >
-                        ← Back
-                    </Link>
-
-                    <h1
-                        className="text-6xl font-black text-white tracking-widest italic mb-12"
-                        style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
-                    >
-                        <TypeLine text="About" onDone={() => setTitleDone(true)} />
-                        {!titleDone && (
-                            <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
-                        )}
-                    </h1>
-
-                    {/* Cards only appear after the title finishes typing */}
-                    {titleDone && (
-                        <div className="flex flex-col gap-6">
-                            {sections.map((section, index) => (
-                                <motion.div
-                                    key={section.label}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.4, delay: index * 0.15 }}
-                                    style={{
-                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.05) 100%)',
-                                        backdropFilter: 'blur(12px)',
-                                        border: '1px solid rgba(255,255,255,0.15)',
-                                        borderRadius: '12px',
-                                        padding: '28px 32px',
-                                    }}
-                                >
-                                    <p
-                                        className="text-sm font-black tracking-widest mb-3"
-                                        style={{ color: 'rgba(255,215,0,0.9)' }}
-                                    >
-                                        {section.label}
-                                    </p>
-                                    <p
-                                        className="text-lg tracking-wide leading-relaxed"
-                                        style={{ color: 'rgba(255,255,255,0.75)' }}
-                                    >
-                                        {section.text}
-                                    </p>
-                                </motion.div>
-                            ))}
-
-                            {/* Social link cards — GitHub and LinkedIn side by side.
-                                To update links: change the href values below. */}
-                            <div className="flex gap-6">
-                                <motion.a
-                                    href="https://github.com/NOKIA05"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    variants={{
-                                        hidden: { opacity: 0, y: 20 },
-                                        visible: { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.45 } },
-                                        hover: { scale: 1.03, boxShadow: '0 0 24px rgba(255,255,255,0.15)', transition: { duration: 0.15 } },
-                                    }}
-                                    initial="hidden"
-                                    animate="visible"
-                                    whileHover="hover"
-                                    className="flex items-center gap-4 flex-1"
-                                    style={{
-                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.05) 100%)',
-                                        backdropFilter: 'blur(12px)',
-                                        border: '1px solid rgba(255,255,255,0.15)',
-                                        borderRadius: '12px',
-                                        padding: '24px 28px',
-                                        textDecoration: 'none',
-                                        boxShadow: 'none',
-                                    }}
-                                >
-                                    <FaGithub size={36} style={{ color: 'rgba(255,255,255,0.9)', flexShrink: 0 }} />
-                                    <div>
-                                        <p className="text-sm font-black tracking-widest mb-1" style={{ color: 'rgba(255,215,0,0.9)' }}>GITHUB</p>
-                                        <p className="text-base tracking-wide" style={{ color: 'rgba(255,255,255,0.6)' }}>Check out my code and projects</p>
-                                    </div>
-                                </motion.a>
-
-                                <motion.a
-                                    href="https://www.linkedin.com/in/abd-alrhamn-odeh-397236338/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    variants={{
-                                        hidden: { opacity: 0, y: 20 },
-                                        visible: { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.55 } },
-                                        hover: { scale: 1.03, boxShadow: '0 0 24px rgba(10,102,194,0.3)', transition: { duration: 0.15 } },
-                                    }}
-                                    initial="hidden"
-                                    animate="visible"
-                                    whileHover="hover"
-                                    className="flex items-center gap-4 flex-1"
-                                    style={{
-                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.05) 100%)',
-                                        backdropFilter: 'blur(12px)',
-                                        border: '1px solid rgba(255,255,255,0.15)',
-                                        borderRadius: '12px',
-                                        padding: '24px 28px',
-                                        textDecoration: 'none',
-                                        boxShadow: 'none',
-                                    }}
-                                >
-                                    <FaLinkedin size={36} style={{ color: 'rgba(10,102,194,0.9)', flexShrink: 0 }} />
-                                    <div>
-                                        <p className="text-sm font-black tracking-widest mb-1" style={{ color: 'rgba(255,215,0,0.9)' }}>LINKEDIN</p>
-                                        <p className="text-base tracking-wide" style={{ color: 'rgba(255,255,255,0.6)' }}>Connect with me professionally</p>
-                                    </div>
-                                </motion.a>
-                            </div>
-                        </div>
-                    )}
-                </div>
+      {/* Bio cards — two up on desktop */}
+      <div className="grid gap-5 sm:grid-cols-2">
+        {ABOUT_SECTIONS.map((section, i) => (
+          <Reveal key={section.label} delay={i * 0.07} className="h-full">
+            <div className="card card-sheen h-full p-6 sm:p-7">
+              <p className="eyebrow mb-3">{section.label}</p>
+              <p className="text-[15px] leading-relaxed text-[#d4c9ba]">
+                {section.text}
+              </p>
             </div>
+          </Reveal>
+        ))}
+      </div>
+
+      {/* Timeline */}
+      <Reveal className="mt-16">
+        <p className="eyebrow mb-6">Timeline</p>
+        <ol className="relative border-l border-white/10 pl-7">
+          {TIMELINE.map((item, i) => (
+            <Reveal
+              as="li"
+              key={item.title}
+              delay={i * 0.08}
+              className="relative pb-9 last:pb-0"
+            >
+              {/* Node on the rail */}
+              <span
+                className="absolute -left-[calc(1.75rem+5px)] top-1.5 h-2.5 w-2.5 rounded-full"
+                style={{
+                  background: i === 0 ? '#e5a854' : '#373026',
+                  boxShadow:
+                    i === 0 ? '0 0 0 4px rgba(209,142,63,0.18)' : 'none',
+                }}
+              />
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#7d7365]">
+                {item.period}
+              </p>
+              <h3 className="mt-1.5 text-base font-semibold tracking-tight text-white">
+                {item.title}
+              </h3>
+              <p className="mt-1.5 text-[15px] leading-relaxed text-[#a89e91]">
+                {item.detail}
+              </p>
+            </Reveal>
+          ))}
+        </ol>
+      </Reveal>
+
+      {/* Social cards */}
+      <Reveal className="mt-16">
+        <p className="eyebrow mb-6">Elsewhere</p>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {SOCIALS.map((s, i) => {
+            const meta = socialMeta[s.id]
+            const Icon = meta.Icon
+            return (
+              <Reveal key={s.id} delay={i * 0.07} className="h-full">
+                <a
+                  href={s.href}
+                  target={s.href.startsWith('http') ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  className="card card-hover card-sheen group flex h-full flex-col p-5"
+                  style={{ textDecoration: 'none' }}
+                >
+                  <div className="flex items-center justify-between">
+                    <Icon size={20} className="text-white" />
+                    <FiArrowUpRight
+                      size={16}
+                      className="text-[#7d7365] transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
+                    />
+                  </div>
+                  <p className="mt-4 text-[15px] font-semibold text-white">
+                    {s.label}
+                  </p>
+                  <p className="mt-1 text-sm text-[#a89e91]">{meta.blurb}</p>
+                </a>
+              </Reveal>
+            )
+          })}
         </div>
-    )
+      </Reveal>
+    </div>
+  )
 }
 
 export default About

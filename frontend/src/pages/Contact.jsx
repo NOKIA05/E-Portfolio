@@ -1,145 +1,235 @@
-// Contact.jsx — the contact form page. Submits to the Flask backend which emails you via SendGrid.
-// The form is rate limited to 3 submissions per minute per IP (set in backend/app/routes/contact.py).
-// After deployment: replace https://e-portfolio-l09x.onrender.com with your Render backend URL
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import Background from '../components/Backgrounds'
-import TypeLine from '../components/TypeLine'
+// Contact.jsx — contact form.
+// Writes straight into the Supabase `messages` table (no backend server).
+// Run supabase/schema.sql once to create the table + the insert-only RLS policy.
+import { useState } from 'react'
+import { FiSend, FiCheckCircle, FiAlertCircle, FiMail } from 'react-icons/fi'
+import { FaGithub, FaLinkedin } from 'react-icons/fa'
+
+import PageHeader from '../components/PageHeader'
+import Reveal from '../components/Reveal'
+import { supabase } from '../lib/supabase'
+import { SOCIALS } from '../lib/profile'
+
+const EMPTY = { name: '', email: '', message: '', company: '' } // `company` = honeypot
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 function Contact() {
-    // form: tracks what the user has typed in each field
-    const [form, setForm] = useState({ name: '', email: '', message: '' })
-    // status: shows feedback to the user ("Sending...", "Message sent!", or an error)
-    const [status, setStatus] = useState('')
-    // titleDone: controls when the form appears (after "Contact" finishes typing)
-    const [titleDone, setTitleDone] = useState(false)
-    const [showCursor, setShowCursor] = useState(true)
+  const [form, setForm] = useState(EMPTY)
+  const [status, setStatus] = useState('idle') // idle | sending | sent | error
+  const [error, setError] = useState('')
 
-    useEffect(() => {
-        const blink = setInterval(() => setShowCursor(c => !c), 530)
-        return () => clearInterval(blink)
-    }, [])
+  const email = SOCIALS.find(s => s.id === 'email')
+  const github = SOCIALS.find(s => s.id === 'github')
+  const linkedin = SOCIALS.find(s => s.id === 'linkedin')
 
-    // Updates the form state whenever the user types in any field
-    function handleChange(e) {
-        setForm({ ...form, [e.target.name]: e.target.value })
+  function handleChange(e) {
+    setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError('')
+
+    // Client-side validation — the DB has matching CHECK constraints
+    if (!form.name.trim()) return setError('Please add your name.')
+    if (!EMAIL_RE.test(form.email.trim()))
+      return setError('That email address doesn’t look right.')
+    if (form.message.trim().length < 10)
+      return setError('Message needs to be at least 10 characters.')
+
+    // Honeypot: real people never fill a hidden field, bots usually do
+    if (form.company) {
+      setStatus('sent')
+      return
     }
 
-    // Sends the form data to the backend as JSON on submission
-    function handleSubmit(e) {
-        e.preventDefault()
-        setStatus('Sending...')
+    setStatus('sending')
 
-        fetch('https://e-portfolio-l09x.onrender.com/api/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) setStatus('Message sent!')
-                else setStatus(data.error)
-            })
+    const { error: dbError } = await supabase.from('messages').insert({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      message: form.message.trim(),
+    })
+
+    if (dbError) {
+      setStatus('error')
+      setError("Couldn't send that — try again, or email me directly.")
+      return
     }
 
-    return (
-        <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden">
-            <Background />
-            <div className="relative z-10 p-12 flex flex-col items-center">
-                <div className="w-full max-w-xl">
-                    {/* Back button — same style used on every inner page */}
-                    <Link
-                        to="/"
-                        className="text-2xl font-bold tracking-widest mb-12 inline-block"
-                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '0 0 10px rgba(255,255,255,0.3)' }}
-                    >
-                        ← Back
-                    </Link>
+    setStatus('sent')
+    setForm(EMPTY)
+  }
 
-                    <h1
-                        className="text-6xl font-black text-white tracking-widest italic mb-12"
-                        style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
-                    >
-                        <TypeLine text="Contact" onDone={() => setTitleDone(true)} />
-                        {!titleDone && (
-                            <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
-                        )}
-                    </h1>
+  return (
+    <div className="mx-auto max-w-5xl px-5 py-16 sm:px-8 sm:py-20">
+      <PageHeader
+        eyebrow="Contact"
+        title="Get in touch"
+        subtitle="Internships, collaborations, or a question about a project — send it over and I'll get back to you."
+      />
 
-                    {/* Form fades in after the title finishes typing */}
-                    {titleDone && (
-                        <motion.form
-                            onSubmit={handleSubmit}
-                            className="flex flex-col gap-6"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.4 }}
-                        >
-                            <input
-                                name="name"
-                                placeholder="Your Name"
-                                value={form.name}
-                                onChange={handleChange}
-                                className="p-4 rounded-lg text-white text-xl tracking-widest"
-                                style={{
-                                    background: 'rgba(255,255,255,0.08)',
-                                    border: '1px solid rgba(255,255,255,0.25)',
-                                    backdropFilter: 'blur(12px)',
-                                    outline: 'none',
-                                }}
-                            />
-                            <input
-                                name="email"
-                                placeholder="Your Email"
-                                value={form.email}
-                                onChange={handleChange}
-                                className="p-4 rounded-lg text-white text-xl tracking-widest"
-                                style={{
-                                    background: 'rgba(255,255,255,0.08)',
-                                    border: '1px solid rgba(255,255,255,0.25)',
-                                    backdropFilter: 'blur(12px)',
-                                    outline: 'none',
-                                }}
-                            />
-                            <textarea
-                                name="message"
-                                placeholder="Your Message"
-                                value={form.message}
-                                onChange={handleChange}
-                                className="p-4 rounded-lg text-white text-xl tracking-widest h-40"
-                                style={{
-                                    background: 'rgba(255,255,255,0.08)',
-                                    border: '1px solid rgba(255,255,255,0.25)',
-                                    backdropFilter: 'blur(12px)',
-                                    outline: 'none',
-                                }}
-                            />
-                            {/* Send button — red to gold gradient */}
-                            <button
-                                type="submit"
-                                className="p-4 rounded-lg text-xl font-black tracking-widest"
-                                style={{
-                                    background: 'rgba(255,255,255,0.9)',
-                                    color: '#000',
-                                    textShadow: 'none',
-                                }}
-                            >
-                                Send
-                            </button>
-                            {/* Shows submission status below the button */}
-                            {status && (
-                                <p className="text-xl tracking-widest text-center"
-                                    style={{ color: 'rgba(255,255,255,0.7)' }}>
-                                    {status}
-                                </p>
-                            )}
-                        </motion.form>
-                    )}
+      <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
+        {/* -------------------------------------------------------------- FORM */}
+        <Reveal>
+          <div className="card card-sheen p-6 sm:p-8">
+            {status === 'sent' ? (
+              <div className="flex flex-col items-center py-12 text-center">
+                <div
+                  className="mb-5 grid h-14 w-14 place-items-center rounded-full"
+                  style={{
+                    background: 'rgba(16,185,129,0.12)',
+                    border: '1px solid rgba(16,185,129,0.35)',
+                  }}
+                >
+                  <FiCheckCircle size={24} className="text-emerald-400" />
                 </div>
-            </div>
-        </div>
-    )
+                <h2 className="text-xl font-semibold tracking-tight text-white">
+                  Message sent
+                </h2>
+                <p className="mt-2 max-w-sm text-[15px] text-[#a89e91]">
+                  Thanks for reaching out — I&apos;ll reply as soon as I can.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setStatus('idle')}
+                  className="btn btn-ghost mt-7"
+                >
+                  Send another
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[13px] font-medium text-[#d4c9ba]">
+                      Name
+                    </span>
+                    <input
+                      name="name"
+                      value={form.name}
+                      onChange={handleChange}
+                      placeholder="Jane Doe"
+                      autoComplete="name"
+                      className="field"
+                    />
+                  </label>
+
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[13px] font-medium text-[#d4c9ba]">
+                      Email
+                    </span>
+                    <input
+                      name="email"
+                      type="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder="jane@company.com"
+                      autoComplete="email"
+                      className="field"
+                    />
+                  </label>
+                </div>
+
+                <label className="flex flex-col gap-2">
+                  <span className="text-[13px] font-medium text-[#d4c9ba]">
+                    Message
+                  </span>
+                  <textarea
+                    name="message"
+                    value={form.message}
+                    onChange={handleChange}
+                    placeholder="What's on your mind?"
+                    rows={7}
+                    className="field resize-y"
+                  />
+                </label>
+
+                {/* Honeypot — hidden from humans, catnip for bots */}
+                <input
+                  name="company"
+                  value={form.company}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    left: '-9999px',
+                    opacity: 0,
+                    height: 0,
+                    width: 0,
+                  }}
+                />
+
+                {error && (
+                  <p className="flex items-center gap-2 text-sm text-amber-400">
+                    <FiAlertCircle size={15} />
+                    {error}
+                  </p>
+                )}
+
+                <div className="flex items-center gap-4">
+                  <button
+                    type="submit"
+                    disabled={status === 'sending'}
+                    className="btn btn-primary"
+                  >
+                    <FiSend size={15} />
+                    {status === 'sending' ? 'Sending…' : 'Send message'}
+                  </button>
+                  <span className="text-[13px] text-[#7d7365]">
+                    Usually replies within a day or two.
+                  </span>
+                </div>
+              </form>
+            )}
+          </div>
+        </Reveal>
+
+        {/* ----------------------------------------------------------- SIDEBAR */}
+        <Reveal delay={0.1} className="flex flex-col gap-4">
+          <a
+            href={email?.href}
+            className="card card-hover card-sheen p-6"
+            style={{ textDecoration: 'none' }}
+          >
+            <FiMail size={20} className="text-white" />
+            <p className="mt-4 text-[15px] font-semibold text-white">Email</p>
+            <p className="mt-1 break-all text-sm text-[#a89e91]">
+              {email?.href.replace('mailto:', '')}
+            </p>
+          </a>
+
+          <a
+            href={github?.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="card card-hover card-sheen p-6"
+            style={{ textDecoration: 'none' }}
+          >
+            <FaGithub size={20} className="text-white" />
+            <p className="mt-4 text-[15px] font-semibold text-white">GitHub</p>
+            <p className="mt-1 text-sm text-[#a89e91]">Code and side projects</p>
+          </a>
+
+          <a
+            href={linkedin?.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="card card-hover card-sheen p-6"
+            style={{ textDecoration: 'none' }}
+          >
+            <FaLinkedin size={20} className="text-white" />
+            <p className="mt-4 text-[15px] font-semibold text-white">LinkedIn</p>
+            <p className="mt-1 text-sm text-[#a89e91]">
+              Experience and background
+            </p>
+          </a>
+        </Reveal>
+      </div>
+    </div>
+  )
 }
 
 export default Contact

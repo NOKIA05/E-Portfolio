@@ -1,276 +1,281 @@
-// Home.jsx — the main landing page of the portfolio.
-// Layout: top nav (Projects, Skills) → squiggly line → name heading + About → squiggly line → bottom nav (Contact, Resume)
+// Home.jsx — the landing page.
+// Sections: hero → stats → featured projects (live from Supabase) → stack → CTA.
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import {Link} from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import Background from '../components/Backgrounds'
-import TypeLine from '../components/TypeLine'
+import { FiArrowRight, FiMapPin } from 'react-icons/fi'
+import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
-// menuItems is kept here for reference but not currently used in the layout.
-// The active navigation uses NavLink components directly in the JSX below.
-const menuItems = [
-    { label: 'About', path: '/about', rotate: 0},
-    { label: 'Projects', path: '/projects', rotate: 4},
-    { label: 'About', path: '/about', rotate: -4},
-    { label: 'Contact', path: '/contact', rotate: 6},
-    { label: 'Resume', path: 'https://e-portfolio-l09x.onrender.com/api/resume', external: true, rotate: -3},
+import Reveal from '../components/Reveal'
+import ProjectCard from '../components/ProjectCard'
+import { supabase } from '../lib/supabase'
+import { PROFILE, STATS, SOCIALS } from '../lib/profile'
+
+// The logos strip under the hero
+const STACK = [
+  'React',
+  'Tailwind',
+  'Supabase',
+  'PostgreSQL',
+  'Python',
+  'Flask',
+  'Vercel',
+  'Linux',
 ]
 
-// MenuItem — a glass card style nav item (not currently used in the main layout)
-function MenuItem({ item, index }) {
-    const [hovered, setHovered] = useState(false)
-
-    const style = {
-        textShadow: hovered
-            ? '2px 2px 0px rgba(220,38,38,1), 4px 4px 0px rgba(150, 0, 0, 0.6), 0 0 32px rgba(220, 38, 38, 0.8)'
-            : '2px 2px 0px rgba(255, 215, 0, 0.6), 4px 4px 0px rgba(180, 150, 0, 0.3)',
-            color: hovered ? '#ffffff' : 'rgba(255, 255, 255, 0.6)',
-            transition: 'all 0.3s ease',
-            transform: hovered ? 'scale(1.08)' : 'scale(1)',
-            display: 'inline-block',
-    }
-
-    const sharedProps = {
-        style,
-        onMouseEnter: () => setHovered(true),
-        onMouseLeave: () => setHovered(false),
-        className:"block text-5xl font-bold tracking-widest",
-    }
-
-    return (
-        <motion.div
-            initial={{ opacity: 0, rotateY: 90 }}
-            animate={{ opacity: 1, rotateY: 0, rotateZ: item.rotate }}
-            transition={{ duration: 0.5, delay: index * 0.15, ease: 'easeOut' }}
-            style={{
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 215, 0, 0.12) 100%)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                borderRadius: '12px',
-                padding: '16px 48px',
-                minWidth: '320px',
-                textAlign: 'center',
-                border: '1px solid transparent',
-                backgroundClip: 'padding-box',
-                boxShadow: hovered
-                    ? '0 0 20px rgba(220, 38, 38, 0.4), inset 0 0 0 1px rgba(255, 215, 0, 0.8)'
-                    : 'inset 0 0 0 1px rgba(255, 255, 255, 0.5), inset 0 0 0 2px rgba(255,215,0,0.3',
-                transition: 'box-shadow 0.3s ease',
-            }}
-        >
-            {item.external ? (
-                <a href={item.path} download {...sharedProps}>{item.label}</a>
-            ) : (
-                <Link to={item.path} {...sharedProps}>{item.label}</Link>
-            )}
-        </motion.div>
-    )
-}
-
-// NavLink — the plain text navigation link used throughout the home page.
-// Changes color and scales up on hover, red glow on hover vs gold glow at rest.
-// To add a new nav link: <NavLink to="/your-page" delay={0.5}>Label</NavLink>
-function NavLink({ to, children, delay }) {
-    const [hovered, setHovered] = useState(false)
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay }}
-            onHoverStart={() => setHovered(true)}
-            onHoverEnd={() => setHovered(false)}
-            style={{ position: 'relative', display: 'inline-block' }}
-        >
-            {/* Organic ink brushstroke — wide, thick, irregular curves */}
-            <svg
-                style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '80vw',
-                    maxWidth: '600px',
-                    height: '80px',
-                    pointerEvents: 'none',
-                    overflow: 'visible',
-                    opacity: hovered ? 0.95 : 0.75,
-                    transition: 'opacity 0.2s ease',
-                }}
-                viewBox="0 0 600 80"
-                preserveAspectRatio="none"
-            >
-                <path
-                    d="M5,40
-                    C6,30 10,18 22,17
-                    C34,16 38,10 52,14
-                    C64,18 68,8 82,13
-                    C94,18 100,10 114,14
-                    C126,18 130,12 144,11
-                    C156,10 162,18 178,14
-                    C192,10 196,20 212,15
-                    C226,10 230,18 246,14
-                    C260,10 264,20 280,16
-                    C294,12 300,20 316,14
-                    C330,8 338,18 352,13
-                    C364,8 370,18 386,14
-                    C400,10 404,20 420,15
-                    C434,10 440,20 456,15
-                    C468,10 474,18 488,14
-                    C500,10 506,20 520,16
-                    C532,12 538,20 552,16
-                    C564,12 570,20 582,18
-                    C592,16 597,24 596,40
-                    C595,54 590,64 578,66
-                    C566,68 560,60 546,65
-                    C532,70 526,62 512,66
-                    C498,70 492,62 478,66
-                    C464,70 456,62 442,66
-                    C428,70 422,60 408,65
-                    C394,70 388,60 374,64
-                    C360,68 354,60 340,65
-                    C326,70 320,60 306,64
-                    C292,68 286,60 272,64
-                    C258,68 252,60 238,65
-                    C224,70 216,62 202,66
-                    C188,70 182,62 168,65
-                    C154,68 148,60 134,64
-                    C120,68 114,60 100,65
-                    C86,70 80,62 66,65
-                    C52,68 46,60 32,63
-                    C20,66 10,60 6,52
-                    C4,48 4,44 5,40 Z"
-                    fill="rgba(44, 44, 44, 0.90)"
-                />
-            </svg>
-
-            <Link
-                to={to}
-                className="text-5xl font-bold tracking-widest"
-                style={{
-                    position: 'relative',
-                    zIndex: 1,
-                    color: hovered ? '#ffffff' : 'rgba(255,255,255,0.7)',
-                    textShadow: hovered ? '0 0 12px rgba(255,255,255,0.6)' : '0 0 10px rgba(255,255,255,0.3)',
-                    transition: 'all 0.2s ease',
-                    display: 'inline-block',
-                    transform: hovered ? 'scale(1.08)' : 'scale(1)',
-                }}
-            >
-                {children}
-            </Link>
-        </motion.div>
-    )
-}
-
 function Home() {
-    // line1Done: tracks when "ABD-ALRHMAN'S" finishes typing so "PORTFOLIO!" can start
-    const [line1Done, setLine1Done] = useState(false)
-    // showCursor: toggles the blinking | cursor on and off
-    const [showCursor, setShowCursor] = useState(true)
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        const blink = setInterval(() => setShowCursor(c => !c), 530)
-        return () => clearInterval(blink)
-    }, [])
+  // Pull the three newest projects for the "Selected work" section
+  useEffect(() => {
+    let alive = true
+    supabase
+      .from('projects')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(3)
+      .then(({ data }) => {
+        if (!alive) return
+        setProjects(data || [])
+        setLoading(false)
+      })
+    return () => {
+      alive = false
+    }
+  }, [])
 
-return (
-    <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden flex flex-col items-center">
-    <Background />
+  const github = SOCIALS.find(s => s.id === 'github')
+  const linkedin = SOCIALS.find(s => s.id === 'linkedin')
 
-    <div className="relative z-10 flex flex-col items-center w-full">
-
-    {/* Title section at the top */}
-    <div className="w-full flex flex-col items-center pt-10">
-
-        {/* First squiggly line — above the title */}
-        <motion.svg
-            width="100%"
-            height="30"
-            viewBox="0 0 1440 30"
-            preserveAspectRatio="none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            style={{ marginBottom: '1.5rem', filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
+  return (
+    <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      {/* ------------------------------------------------------------------ HERO */}
+      <section className="flex flex-col items-start pb-20 pt-20 sm:pt-28">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-7 inline-flex items-center gap-2 rounded-full py-1.5 pl-2 pr-3.5"
+          style={{
+            background: 'rgba(255,255,255,0.04)',
+            border: '1px solid rgba(255,255,255,0.08)',
+          }}
         >
-            <motion.path
-                d="M0,15 C120,0 240,30 360,15 C480,0 600,30 720,15 C840,0 960,30 1080,15 C1200,0 1320,30 1440,15"
-                fill="none"
-                stroke="url(#lineGrad1)"
-                strokeWidth="2"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 1.2, ease: 'easeInOut' }}
-            />
-            <defs>
-                <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
-                    <stop offset="100%" stopColor="rgba(255,255,255,1)" />
-                </linearGradient>
-            </defs>
-        </motion.svg>
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+          </span>
+          <span className="font-mono text-[12px] font-medium text-[#a89e91]">
+            {PROFILE.status}
+          </span>
+        </motion.div>
 
-        <h1
-            className="text-7xl font-black text-white tracking-widest italic text-center"
-            style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
+        {/* Terminal prompt — a small cybersecurity wink above the headline */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.04 }}
+          className="mb-4 font-mono text-[13px] tracking-tight"
+          aria-hidden="true"
         >
-            <TypeLine text="ABD-ALRHMAN'S" onDone={() => setLine1Done(true)} />
-            {!line1Done && (
-                <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
-            )}
-            <br />
-            {line1Done && (
-                <span style={{ fontSize: '6rem' }}>
-                    <TypeLine text="PORTFOLIO!" />
-                    <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
-                </span>
-            )}
-        </h1>
+          <span style={{ color: '#d18e3f' }}>abood@memphis</span>
+          <span className="text-[#7d7365]">:~$ </span>
+          <span className="text-[#d4c9ba]">whoami</span>
+        </motion.p>
 
-        {/* Second squiggly line — below the title */}
-        <motion.svg
-            width="100%"
-            height="30"
-            viewBox="0 0 1440 30"
-            preserveAspectRatio="none"
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            style={{ marginTop: '1.5rem', filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
+        <motion.h1
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-4xl text-[2.75rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
+          style={{ letterSpacing: '-0.04em' }}
         >
-            <motion.path
-                d="M0,15 C120,0 240,30 360,15 C480,0 600,30 720,15 C840,0 960,30 1080,15 C1200,0 1320,30 1440,15"
-                fill="none"
-                stroke="url(#lineGrad2)"
-                strokeWidth="2"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 1.2, delay: 0.3, ease: 'easeInOut' }}
-            />
-            <defs>
-                <linearGradient id="lineGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
-                    <stop offset="100%" stopColor="rgba(255,255,255,1)" />
-                </linearGradient>
-            </defs>
-        </motion.svg>
-    </div>
+          <span className="text-white">{PROFILE.name}</span>
+          <br />
+          <span className="text-gradient">builds secure software.</span>
+        </motion.h1>
 
-    {/* Nav links centered in the middle of the page */}
-    <div className="flex flex-col items-center justify-center flex-1 gap-12 my-auto py-24">
-        <NavLink to="/about" delay={0.1}>About</NavLink>
-        <NavLink to="/skills" delay={0.25}>Skills</NavLink>
-        <NavLink to="/projects" delay={0.4}>Projects</NavLink>
-        <NavLink to="/resume" delay={0.55}>Resume</NavLink>
-        <NavLink to="/contact" delay={0.7}>Contact</NavLink>
-    </div>
+        <motion.p
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.14, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-7 max-w-2xl text-[17px] leading-relaxed text-[#a89e91] sm:text-lg"
+        >
+          {PROFILE.tagline}
+        </motion.p>
 
-    <div className="w-full">
-    </div>
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-9 flex flex-wrap items-center gap-3"
+        >
+          <Link to="/projects" className="btn btn-primary">
+            View projects
+            <FiArrowRight size={16} />
+          </Link>
+          <Link to="/contact" className="btn btn-ghost">
+            Get in touch
+          </Link>
+          <div className="ml-1 flex items-center gap-2">
+            <a
+              href={github?.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="grid h-11 w-11 place-items-center rounded-[10px] text-[#a89e91] transition-all hover:-translate-y-0.5 hover:text-white"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.1)',
+              }}
+            >
+              <FaGithub size={17} />
+            </a>
+            <a
+              href={linkedin?.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="grid h-11 w-11 place-items-center rounded-[10px] text-[#a89e91] transition-all hover:-translate-y-0.5 hover:text-white"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.1)',
+              }}
+            >
+              <FaLinkedin size={17} />
+            </a>
+          </div>
+        </motion.div>
 
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="mt-8 inline-flex items-center gap-2 text-sm text-[#7d7365]"
+        >
+          <FiMapPin size={14} />
+          {PROFILE.location} · {PROFILE.school}
+        </motion.p>
+      </section>
+
+      {/* ----------------------------------------------------------------- STATS */}
+      <Reveal as="section" className="grid gap-4 sm:grid-cols-3">
+        {STATS.map((s, i) => (
+          <Reveal key={s.label} delay={i * 0.08} className="card card-sheen p-6">
+            <p className="text-2xl font-bold tracking-tight text-white">
+              {s.value}
+            </p>
+            <p className="mt-1.5 text-sm text-[#a89e91]">{s.label}</p>
+          </Reveal>
+        ))}
+      </Reveal>
+
+      {/* ----------------------------------------------------------------- STACK */}
+      <Reveal as="section" className="py-16" delay={0.05}>
+        <p className="eyebrow mb-5">Working with</p>
+        <div className="flex flex-wrap gap-2.5">
+          {STACK.map(t => (
+            <span key={t} className="pill">
+              {t}
+            </span>
+          ))}
+        </div>
+      </Reveal>
+
+      <div className="hairline" />
+
+      {/* -------------------------------------------------------------- PROJECTS */}
+      <section className="py-16">
+        <Reveal className="mb-9 flex items-end justify-between gap-6">
+          <div>
+            <p className="eyebrow mb-3">Selected work</p>
+            <h2
+              className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+              style={{ letterSpacing: '-0.03em' }}
+            >
+              Things I&apos;ve built
+            </h2>
+          </div>
+          <Link
+            to="/projects"
+            className="hidden shrink-0 items-center gap-1.5 text-sm font-medium text-[#a89e91] transition-colors hover:text-white sm:inline-flex"
+            style={{ textDecoration: 'none' }}
+          >
+            All projects
+            <FiArrowRight size={15} />
+          </Link>
+        </Reveal>
+
+        {loading && (
+          // Skeletons while Supabase responds
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[0, 1, 2].map(i => (
+              <div key={i} className="card h-48 animate-pulse p-6" />
+            ))}
+          </div>
+        )}
+
+        {!loading && projects.length === 0 && (
+          <div className="card p-10 text-center">
+            <p className="text-white">Projects are on their way.</p>
+            <p className="mt-2 text-sm text-[#a89e91]">
+              Add a row to the `projects` table in Supabase and it&apos;ll appear
+              here.
+            </p>
+          </div>
+        )}
+
+        {!loading && projects.length > 0 && (
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.map((p, i) => (
+              <Reveal key={p.id ?? p.title} delay={i * 0.08} className="h-full">
+                <ProjectCard project={p} />
+              </Reveal>
+            ))}
+          </div>
+        )}
+
+        <Reveal className="mt-8 sm:hidden">
+          <Link to="/projects" className="btn btn-ghost w-full">
+            All projects
+            <FiArrowRight size={15} />
+          </Link>
+        </Reveal>
+      </section>
+
+      {/* ------------------------------------------------------------------- CTA */}
+      <Reveal as="section" className="pb-8">
+        <div
+          className="card card-sheen relative overflow-hidden p-9 text-center sm:p-14"
+          style={{
+            background:
+              'linear-gradient(140deg, rgba(209,142,63,0.16), rgba(255,255,255,0.02) 55%)',
+          }}
+        >
+          <h2
+            className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
+            style={{ letterSpacing: '-0.03em' }}
+          >
+            Let&apos;s build something
+          </h2>
+          <p className="mx-auto mt-4 max-w-lg text-[17px] leading-relaxed text-[#a89e91]">
+            Internships, collaborations, or just a question about one of the
+            projects — my inbox is open.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link to="/contact" className="btn btn-primary">
+              Send a message
+              <FiArrowRight size={16} />
+            </Link>
+            <Link to="/resume" className="btn btn-ghost">
+              View resume
+            </Link>
+          </div>
+        </div>
+      </Reveal>
     </div>
-    </div>
-)
+  )
 }
-
 
 export default Home

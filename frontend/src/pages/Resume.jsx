@@ -1,83 +1,65 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import Background from '../components/Backgrounds'
-import TypeLine from '../components/TypeLine'
+// Resume.jsx — resume preview + download.
+// All three files are served straight from /public (no backend involved):
+//   public/resume.pdf, public/resume-preview-1.png, public/resume-preview-2.png
+import { FiDownload, FiExternalLink } from 'react-icons/fi'
+
+import PageHeader from '../components/PageHeader'
+import Reveal from '../components/Reveal'
+
+const PDF_PATH = '/resume.pdf'
+const PAGES = [1, 2]
 
 function Resume() {
-    const [titleDone, setTitleDone] = useState(false)
-    const [showCursor, setShowCursor] = useState(true)
+  return (
+    <div className="mx-auto max-w-5xl px-5 py-16 sm:px-8 sm:py-20">
+      <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader
+          eyebrow="Resume"
+          title="Resume"
+          subtitle="Two pages. Grab the PDF, or read it right here."
+        />
 
-    useEffect(() => {
-        const blink = setInterval(() => setShowCursor(c => !c), 530)
-        return () => clearInterval(blink)
-    }, [])
+        <Reveal className="flex shrink-0 gap-3 pb-12">
+          <a
+            href={PDF_PATH}
+            download="Abd-alrhman_Odeh_Resume.pdf"
+            className="btn btn-primary"
+          >
+            <FiDownload size={16} />
+            Download
+          </a>
+          <a
+            href={PDF_PATH}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost"
+          >
+            <FiExternalLink size={16} />
+            Open
+          </a>
+        </Reveal>
+      </div>
 
-    return (
-        <div className="min-h-screen bg-[#0a0a0a] relative overflow-hidden">
-            <Background />
-
-            {/* Download button — served from public folder, no backend needed */}
-            <div className="fixed top-6 right-8 z-20">
-                <a
-                    href="/resume.pdf"
-                    download="Abd-alrhman_Odeh_resume.pdf"
-                    className="text-2xl font-bold tracking-widest inline-block"
-                    style={{ color: 'rgba(255,255,255,0.6)', textShadow: '0 0 10px rgba(255,255,255,0.3)', textDecoration: 'none' }}
-                >
-                    ↓ Download
-                </a>
-            </div>
-
-            <div className="relative z-10 p-12 flex flex-col items-center">
-                <div className="w-full max-w-5xl">
-                    <Link
-                        to="/"
-                        className="text-2xl font-bold tracking-widest mb-12 inline-block"
-                        style={{ color: 'rgba(255,255,255,0.6)', textShadow: '0 0 10px rgba(255,255,255,0.3)' }}
-                    >
-                        ← Back
-                    </Link>
-
-                    <h1
-                        className="text-6xl font-black text-white tracking-widest italic mb-12"
-                        style={{ textShadow: '0 0 20px rgba(255,255,255,0.7)' }}
-                    >
-                        <TypeLine text="Resume" onDone={() => setTitleDone(true)} />
-                        {!titleDone && (
-                            <span style={{ color: 'rgba(255,255,255,0.9)' }}>{showCursor ? '|' : ''}</span>
-                        )}
-                    </h1>
-
-                    {titleDone && (
-                        <div className="flex gap-6">
-                            {[1, 2].map(n => (
-                                <motion.div
-                                    key={n}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.5, delay: n * 0.1 }}
-                                    style={{
-                                        flex: 1,
-                                        border: '1px solid rgba(255,255,255,0.15)',
-                                        borderRadius: '12px',
-                                        overflow: 'hidden',
-                                        boxShadow: '0 0 40px rgba(255,255,255,0.06)',
-                                    }}
-                                >
-                                    <img
-                                        src={`/resume-preview-${n}.png`}
-                                        alt={`Resume page ${n}`}
-                                        style={{ width: '100%', display: 'block' }}
-                                    />
-                                </motion.div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </div>
-        </div>
-    )
+      <div className="grid gap-6 md:grid-cols-2">
+        {PAGES.map((n, i) => (
+          <Reveal key={n} delay={i * 0.1}>
+            <figure className="card card-sheen overflow-hidden p-2">
+              <img
+                src={`/resume-preview-${n}.png`}
+                alt={`Resume page ${n}`}
+                loading="lazy"
+                className="w-full rounded-[10px]"
+                style={{ display: 'block' }}
+              />
+              <figcaption className="px-2 py-2.5 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-[#7d7365]">
+                Page {n}
+              </figcaption>
+            </figure>
+          </Reveal>
+        ))}
+      </div>
+    </div>
+  )
 }
 
 export default Resume
