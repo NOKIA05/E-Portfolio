@@ -38,7 +38,7 @@ function Projects() {
       <PageHeader
         eyebrow="Projects"
         title="Things I've built"
-        subtitle="Web apps, network tooling, and security experiments — pulled live from my Supabase database."
+        subtitle="Web apps, network tooling, and security experiments, pulled live from my Supabase database."
       />
 
       {state === 'loading' && (

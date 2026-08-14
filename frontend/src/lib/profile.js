@@ -9,7 +9,7 @@ export const PROFILE = {
   school: 'University of Memphis',
   status: 'Open to Summer 2027 internships',
   tagline:
-    'Junior studying Cybersecurity at the University of Memphis. I build web apps, network tooling, and security projects — and I like shipping them, not just prototyping them.',
+    'Junior studying Cybersecurity at the University of Memphis. I build web apps, network tooling, and security projects, and I like shipping them, not just prototyping them.',
 }
 
 export const SOCIALS = [
@@ -33,11 +33,11 @@ export const STATS = [
 export const ABOUT_SECTIONS = [
   {
     label: 'Who I am',
-    text: "My name is Abd-alrhman Odeh. I was born and raised in Amman, Jordan — where I lived until I graduated high school. After that I moved to the United States to study Cybersecurity, and I'm now a junior at the University of Memphis.",
+    text: "My name is Abd-alrhman Odeh. I was born and raised in Amman, Jordan, where I lived until I graduated high school. After that I moved to the United States to study Cybersecurity, and I'm now a junior at the University of Memphis.",
   },
   {
     label: 'What I do',
-    text: "I study cybersecurity and build things on the side. Network tools, web apps, or just tinkering with code — I like seeing an idea go from a blank file to something running. This portfolio is one of those projects.",
+    text: "I study cybersecurity and build things on the side. Network tools, web apps, or just tinkering with code. I like seeing an idea go from a blank file to something running. This portfolio is one of those projects.",
   },
   {
     label: 'How I work',
@@ -95,14 +95,14 @@ export const SKILL_GROUPS = [
 export const TIMELINE = [
   {
     period: 'Now',
-    title: 'B.S. Cybersecurity — University of Memphis',
+    title: 'B.S. Cybersecurity, University of Memphis',
     detail: 'Junior. Coursework in networking, systems, and secure development.',
   },
   {
     period: 'Ongoing',
     title: 'Building side projects',
     detail:
-      'Full-stack web apps and network tooling — React on the front, Supabase and Python behind it.',
+      'Full-stack web apps and network tooling. React on the front, Supabase and Python behind it.',
   },
   {
     period: 'Before',

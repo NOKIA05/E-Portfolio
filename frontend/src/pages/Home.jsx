@@ -261,7 +261,7 @@ function Home() {
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-[17px] leading-relaxed text-[#a89e91]">
             Internships, collaborations, or just a question about one of the
-            projects — my inbox is open.
+            projects. My inbox is open.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link to="/contact" className="btn btn-primary">

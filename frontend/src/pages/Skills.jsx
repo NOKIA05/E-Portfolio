@@ -12,7 +12,7 @@ function Skills() {
       <PageHeader
         eyebrow="Skills"
         title="What I work with"
-        subtitle={`${total} tools and technologies across ${SKILL_GROUPS.length} areas — the ones I've actually shipped something with.`}
+        subtitle={`${total} tools and technologies across ${SKILL_GROUPS.length} areas. The ones I've actually shipped something with.`}
       />
 
       <div className="grid gap-5 md:grid-cols-2">

@@ -53,7 +53,7 @@ function Contact() {
 
     if (dbError) {
       setStatus('error')
-      setError("Couldn't send that — try again, or email me directly.")
+      setError("Couldn't send that. Try again, or email me directly.")
       return
     }
 
@@ -66,7 +66,7 @@ function Contact() {
       <PageHeader
         eyebrow="Contact"
         title="Get in touch"
-        subtitle="Internships, collaborations, or a question about a project — send it over and I'll get back to you."
+        subtitle="Internships, collaborations, or a question about a project. Send it over and I'll get back to you."
       />
 
       <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
@@ -88,7 +88,7 @@ function Contact() {
                   Message sent
                 </h2>
                 <p className="mt-2 max-w-sm text-[15px] text-[#a89e91]">
-                  Thanks for reaching out — I&apos;ll reply as soon as I can.
+                  Thanks for reaching out. I&apos;ll reply as soon as I can.
                 </p>
                 <button
                   type="button"
