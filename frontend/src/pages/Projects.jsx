@@ -7,6 +7,7 @@ import { FiAlertCircle } from 'react-icons/fi'
 import PageHeader from '../components/PageHeader'
 import Reveal from '../components/Reveal'
 import ProjectCard from '../components/ProjectCard'
+import GitHubActivity from '../components/GitHubActivity'
 import { supabase } from '../lib/supabase'
 
 function Projects() {
@@ -81,6 +82,8 @@ function Projects() {
           ))}
         </div>
       )}
+
+      <GitHubActivity />
 
       <Reveal className="mt-14">
         <div className="hairline mb-8" />
