@@ -7,6 +7,7 @@ import { Routes, Route, useLocation, Link } from 'react-router-dom'
 import Background from './components/Background'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import Dock from './components/Dock'
 
 import Home from './pages/Home'
 import About from './pages/About'
@@ -48,7 +49,7 @@ function App() {
       <ScrollToTop />
 
       {/* pt-16 clears the fixed navbar */}
-      <main className="relative z-10 pt-16">
+      <main className="relative z-10 pt-16 pb-24">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -61,7 +62,10 @@ function App() {
         </Routes>
       </main>
 
-      <Footer />
+      <div className="pb-20 sm:pb-24">
+        <Footer />
+      </div>
+      <Dock />
     </div>
   )
 }

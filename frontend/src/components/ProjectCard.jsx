@@ -40,7 +40,20 @@ function ProjectCard({ project }) {
   const primary = caseStudy || liveUrl || githubUrl
 
   return (
-    <article className="card card-hover card-sheen group flex h-full flex-col p-6">
+    <article className="card card-hover card-sheen group flex h-full flex-col overflow-hidden p-0">
+      {/* Window title bar - implies "this is running software" */}
+      <div
+        className="flex items-center gap-1.5 px-5 py-3"
+        style={{ borderBottom: '1px solid rgba(255,244,230,0.09)', background: 'rgba(255,244,230,0.03)' }}
+      >
+        <span className="h-[11px] w-[11px] rounded-full" style={{ background: '#ff5f57' }} />
+        <span className="h-[11px] w-[11px] rounded-full" style={{ background: '#febc2e' }} />
+        <span className="h-[11px] w-[11px] rounded-full" style={{ background: '#28c840' }} />
+        <span className="ml-2 font-mono text-[11px]" style={{ color: 'rgba(248,243,234,0.45)' }}>
+          {(project.slug || project.title.toLowerCase().replace(/[^a-z0-9]+/g, '_'))}
+        </span>
+      </div>
+      <div className="flex flex-1 flex-col p-6 pt-5">
       <div className="flex items-start justify-between gap-4">
         <h3 className="text-lg font-semibold tracking-tight text-white">
           {project.title}
@@ -109,6 +122,7 @@ function ProjectCard({ project }) {
           )}
         </div>
       )}
+      </div>
     </article>
   )
 }

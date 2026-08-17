@@ -1,22 +1,11 @@
 // Navbar.jsx - the persistent top navigation on every page.
-// Becomes a frosted bar once you scroll past 12px, collapses to a sheet on mobile.
-// To add a page to the nav: add it to the `links` array below.
+// Becomes a frosted bar once you scroll past 12px. Page links live in the Dock.
+// To add a page to the nav: add it to the `items` array in Dock.jsx.
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX } from 'react-icons/fi'
-
-const links = [
-  { label: 'About', to: '/about' },
-  { label: 'Skills', to: '/skills' },
-  { label: 'Projects', to: '/projects' },
-  { label: 'Resume', to: '/resume' },
-]
+import { Link } from 'react-router-dom'
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [open, setOpen] = useState(false)
-  const location = useLocation()
 
   // Frost the bar only after the user scrolls, so the hero stays clean at rest
   useEffect(() => {
@@ -25,9 +14,6 @@ function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  // Close the mobile sheet whenever the route changes
-  useEffect(() => setOpen(false), [location.pathname])
 
   return (
     <header
@@ -61,91 +47,12 @@ function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop links */}
-        <div className="hidden items-center gap-1 md:flex">
-          {links.map(l => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              className="relative rounded-lg px-3 py-2 text-sm font-medium transition-colors"
-              style={({ isActive }) => ({
-                color: isActive ? '#fff' : '#a89e91',
-                textDecoration: 'none',
-              })}
-            >
-              {({ isActive }) => (
-                <>
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-active"
-                      className="absolute inset-0 rounded-lg"
-                      style={{
-                        background: 'rgba(255,255,255,0.07)',
-                        border: '1px solid rgba(255,255,255,0.08)',
-                      }}
-                      transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                    />
-                  )}
-                  <span className="relative">{l.label}</span>
-                </>
-              )}
-            </NavLink>
-          ))}
-          <Link to="/contact" className="btn btn-primary ml-3 h-9 text-sm">
-            Get in touch
-          </Link>
-        </div>
+        <Link to="/contact" className="btn btn-primary h-9 text-sm">
+          Get in touch
+        </Link>
 
-        {/* Mobile toggle */}
-        <button
-          type="button"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-          onClick={() => setOpen(o => !o)}
-          className="grid h-10 w-10 place-items-center rounded-lg text-white md:hidden"
-          style={{
-            background: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(255,255,255,0.1)',
-          }}
-        >
-          {open ? <FiX size={18} /> : <FiMenu size={18} />}
-        </button>
       </nav>
 
-      {/* Mobile sheet */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden md:hidden"
-            style={{
-              background: 'rgba(12,10,8,0.95)',
-              backdropFilter: 'blur(14px)',
-              borderBottom: '1px solid rgba(255,255,255,0.07)',
-            }}
-          >
-            <div className="flex flex-col gap-1 px-5 pb-5 pt-2">
-              {[...links, { label: 'Contact', to: '/contact' }].map(l => (
-                <NavLink
-                  key={l.to}
-                  to={l.to}
-                  className="rounded-lg px-3 py-3 text-base font-medium"
-                  style={({ isActive }) => ({
-                    color: isActive ? '#fff' : '#a89e91',
-                    background: isActive ? 'rgba(255,255,255,0.06)' : 'transparent',
-                    textDecoration: 'none',
-                  })}
-                >
-                  {l.label}
-                </NavLink>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
   )
 }
